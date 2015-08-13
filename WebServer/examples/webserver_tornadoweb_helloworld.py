@@ -10,7 +10,7 @@ renderer = WebServer.TornadoWeb.TornadoWebRenderer()
 
 torus = BRepPrimAPI_MakeTorus(40, 10).Shape()
 
-renderer.Display(torus)
+renderer.DisplayShape(torus)
 
 print(renderer)
 if __name__ == "__main__":

@@ -259,7 +259,7 @@ class TornadoWebRenderer(object):
         os.unlink(fn)
         return data
 
-    def Display(self, shape, idx=None, color=None):
+    def DisplayShape(self, shape, idx=None, color=None):
         if color is None:
             color = DEFAULT_COLOR
         shape_list = STATIC_DATA.SHAPES_PER_VIEWER[self.id]

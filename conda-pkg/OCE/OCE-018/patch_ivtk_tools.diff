@@ -1,0 +1,14 @@
+--- src/IVtkTools/IVtkTools_orig.hxx	2015-08-28 23:02:50.000000000 +0200
++++ src/IVtkTools/IVtkTools.hxx	2015-08-28 20:02:13.000000000 +0200
+@@ -28,6 +28,11 @@
+   #define IVtkTools_EXPORT
+ #endif
+ 
++#if !defined(VTK_LEGACY_REMOVE)
++#define vtkFloatingPointType double
++#endif
++
++
+ class vtkLookupTable;
+ class vtkMapper;
+ 

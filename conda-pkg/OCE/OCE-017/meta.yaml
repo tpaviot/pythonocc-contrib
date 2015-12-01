@@ -1,0 +1,39 @@
+package:
+  name: opencascade_community_edition
+  version: 0.17.1
+
+source:
+  git_url: https://github.com/tpaviot/oce.git
+  git_tag: tp/prepare-release-0.17.1
+
+build:
+   number: 0
+   binary_relocation: true # (defaults to true)
+
+
+requirements:
+  build:
+    - cmake
+    # using gcc over clang, due to: https://github.com/tpaviot/oce/issues/576
+    # currently clang cannot build OCE
+#    - gcc
+    - freeimage
+    - freetype
+    - tbb
+    - gl2ps
+    - python # actually, to have TCL
+    - tk #
+  run:
+#    - vtk
+#    - libgcc
+    - freeimage
+    - freetype
+    - tbb
+    - gl2ps
+    - python # actually to have TCL
+    - tk # since the DRAW program should be included, not just the raw libs...
+
+
+about:
+  home: https://github.com/tpaviot/oce
+  license: LGPL 2.1

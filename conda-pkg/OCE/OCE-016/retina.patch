@@ -1,0 +1,13 @@
+--- src/Cocoa/Cocoa_Window.mm
++++ src/Cocoa/Cocoa_Window.mm
+@@ -99,6 +99,10 @@ Cocoa_Window::Cocoa_Window (const Standard_CString theTitle,
+
+   // do not destroy NSWindow on close - we didn't handle it!
+   [myHWindow setReleasedWhenClosed: NO];
++
++  // use retina resoltuion whenever possible
++  [myHWindow setWantsBestResolutionOpenGLSurface:YES];
++
+ }
+
+ // =======================================================================

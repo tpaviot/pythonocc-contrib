@@ -1,0 +1,13 @@
+--- src/IVtkVTK/IVtkVTK_View_orig.hxx	2015-08-28 23:06:46.000000000 +0200
++++ src/IVtkVTK/IVtkVTK_View.hxx	2015-08-28 21:04:00.000000000 +0200
+@@ -18,6 +18,10 @@
+ 
+ #include <IVtk_IView.hxx>
+ 
++#if !defined(VTK_LEGACY_REMOVE)
++#define vtkFloatingPointType double
++#endif
++
+ class vtkRenderer;
+ 
+ DEFINE_STANDARD_HANDLE( IVtkVTK_View, IVtk_IView )

@@ -1,0 +1,39 @@
+package:
+  name: opencascade_community_edition
+  version: 0.18.a
+
+source:
+  git_url: https://github.com/blobfish/oce.git
+  git_tag: 691patched
+#  patches:
+#    - patch_ivtk_tools.diff
+#    - patch_ivtkvtk_view.diff
+
+build:
+   number: 0
+#   binary_relocation: false # takes forever! possible fucks up some shit?
+   binary_relocation: true # (defaults to true)
+
+requirements:
+  build:
+    - cmake
+    - freeimage
+    - freetype
+#    - vtk
+    - tbb
+    - gl2ps
+    - python # actually, to have TCL
+    - tk #
+  run:
+#    - vtk
+    - freeimage
+    - freetype
+    - tbb
+    - gl2ps
+    - python # actually to have TCL
+    - tk # since the DRAW program should be included, not just the raw libs...
+
+
+about:
+  home: https://github.com/tpaviot/oce
+  license: LGPL 2.1

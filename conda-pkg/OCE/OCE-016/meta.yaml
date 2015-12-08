@@ -7,17 +7,23 @@ package:
   version: 0.16.1
 
 source:
-  git_url: https://github.com/tpaviot/oce
-  git_tag: OCE-0.16.1
+  git_url: https://github.com/tpaviot/oce                       [unix]
+  git_tag: OCE-0.16.1                                           [unix]
+  fn: OCE-0.16.1.tar.gz                                         [win]
+  url: https://github.com/tpaviot/oce/archive/OCE-0.16.1.tar.gz [win]
   patches:
-    - retina.patch
+    - retina.patch       [osx]
 
 build:
    number: 3
    binary_relocation: true # (defaults to true)
+   features:
+    - vc9                [win and py27]
 
 requirements:
   build:
+    - ninja              [win]
+    - gcc                [linux]
     - cmake
     - freeimage
     - freetype
@@ -37,3 +43,4 @@ requirements:
 about:
   home: https://github.com/tpaviot/oce
   license: LGPL 2.1
+  summary: OpenCASCADE community edition

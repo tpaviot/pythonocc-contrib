@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# if you'd like to build a conda package from a local directory
-# then comment out the "source" section in meta.yaml
-# and replace $LOCAL_SRC_DIR to your pythonocc-core directory
-#export LOCAL_SRC_DIR=/path/to/pythonocc-core/
-#cp -r $LOCAL_SRC_DIR .
-
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${PY_VER}.dylib"
 else
@@ -50,5 +44,9 @@ make install
 mkdir -p $PREFIX/src
 mkdir -p $PREFIX/src/pythonocc-core
 cp -r src $PREFIX/src/pythonocc-core
+
+# copy the examples to a /share folder
+mkdir -p $PREFIX/share/pythonocc-core/examples
+cp -r examples $PREFIX/share/pythonocc-core
 
 echo "Done building and installing pythonocc-core" && date

@@ -1,4 +1,3 @@
-#language: python
 language: cpp
 
 sudo: true
@@ -6,12 +5,6 @@ sudo: true
 compiler:
   # - gcc
   - clang
-
-python:
-  # We don't actually use the Travis Python, but this keeps it organized.
-#  - "2.6"
-  - "2.7"
-#  - "3.4"
 
 before_install:
   - sudo apt-get update
@@ -28,7 +21,7 @@ install:
   # version is the same.
 
 
-    wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+  - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
 #  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
 #      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
 #    else
@@ -43,13 +36,7 @@ install:
   - conda update -q conda
   # Useful for debugging any issues with conda
   - conda info -a
-
-  # Replace dep1 dep2 ... with your dependencies
-  - conda config --add channels dlr-sc
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
   - conda install conda-build
-  - source activate test-environment
-
   # BUILD OCE
   - cd conda-pkg/OCE/OCE-016
   # invoking a conda build also invokes a test testing the validity of the build
@@ -57,9 +44,15 @@ install:
   - conda build .
   - conda install opencascade_community_edition --use-local
 
-  # BUILD PYTHONOCC-CORE
-  - cd ../../pythonocc-core
-  - conda build .
+#  # Replace dep1 dep2 ... with your dependencies
+#  - conda config --add channels dlr-sc
+#  - conda create -q -n test-environment python=2.7
+#  - source activate test-environment
+#
+#
+#  # BUILD PYTHONOCC-CORE
+#  - cd ../../pythonocc-core
+#  - conda build .
 
   # bzzz  dfsdfsd
 

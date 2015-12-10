@@ -11,7 +11,10 @@ python:
 
 install:
 #  - sudo apt-get update
-#  - apt-get update
+  - apt-get update
+  - apt-get install tcl8.5-dev tk8.5-dev
+  # headless opengl rendering
+  - apt-get libosmesa6-dev
 
   # We do this conditionally because it saves us some downloading if the
   # version is the same.

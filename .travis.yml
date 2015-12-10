@@ -1,4 +1,5 @@
-language: cpp
+language:
+  - cpp
 
 sudo: true
 
@@ -37,6 +38,8 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
   - conda install conda-build
+  # DLR's conda dependency channel
+  - conda config --add channels dlr-sc
   # BUILD OCE
   - cd conda-pkg/OCE/OCE-016
   # invoking a conda build also invokes a test testing the validity of the build
@@ -44,8 +47,6 @@ install:
   - conda build .
   - conda install opencascade_community_edition --use-local
 
-#  # Replace dep1 dep2 ... with your dependencies
-#  - conda config --add channels dlr-sc
 #  - conda create -q -n test-environment python=2.7
 #  - source activate test-environment
 #

@@ -4,7 +4,6 @@ python:
   # We don't actually use the Travis Python, but this keeps it organized.
   - "2.6"
   - "2.7"
-  - "3.3"
   - "3.4"
 
 install:
@@ -27,6 +26,7 @@ install:
   # Replace dep1 dep2 ... with your dependencies
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
   - source activate test-environment
+  - conda install conda-build
 
   # BUILD OCE
   - cd conda-pkg/OCE/OCE-016

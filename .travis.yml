@@ -1,6 +1,5 @@
 language: python
 
-# build with containers
 sudo: false
 
 python:
@@ -9,12 +8,19 @@ python:
   - "2.7"
 #  - "3.4"
 
+addons:
+  apt:
+    packages:
+      - tcl8.5-dev
+      - tk8.5-dev
+      - libosmesa6-dev
+
 install:
 #  - sudo apt-get update
-  - apt-get update
-  - apt-get install tcl8.5-dev tk8.5-dev
-  # headless opengl rendering
-  - apt-get libosmesa6-dev
+#  - apt-get update
+#  - apt-get install
+#  # headless opengl rendering
+#  - apt-get
 
   # We do this conditionally because it saves us some downloading if the
   # version is the same.

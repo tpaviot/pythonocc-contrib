@@ -39,7 +39,7 @@ install:
   - cd ../../pythonocc-core
   - conda build .
 
-  # bzzz
+  # bzzz  dfsdfsd
 
 
 script:

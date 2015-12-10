@@ -1,0 +1,33 @@
+package:
+  name: smesh # lower case name of package, may contain '-' but no spaces
+  version: 6.5.3.1 # version of package. Should use the PEP-386 verlib
+
+source:
+  git_url: https://github.com/tpaviot/smesh.git
+  git_tag: master
+
+build:
+  # The build number should be incremented for new builds of the same version
+  number: 5     # (defaults to 0)
+  binary_relocation: true # (defaults to true)
+
+requirements:
+  build:
+    - gcc # gfortran
+    - cmake
+    - boost
+    - pythonocc-core 0.16.3dev # DLR-SC
+    - python
+    - ipdb
+    - conda-build
+
+#  # Packages required to run the package. These are the dependencies that
+#  # will be installed automatically whenever the package is installed.
+  run:
+    - pythonocc-core 0.16.3dev # DLR-SC
+    - gcc
+
+about:
+  home: https://github.com/tpaviot/smesh
+  summary: mesh generation for pythonocc-core (opencascade community edition)
+  license: LGPL

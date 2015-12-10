@@ -1,6 +1,6 @@
 language: python
 
-sudo: false
+sudo: true
 
 python:
   # We don't actually use the Travis Python, but this keeps it organized.
@@ -8,19 +8,14 @@ python:
   - "2.7"
 #  - "3.4"
 
-addons:
-  apt:
-    packages:
-      - tcl8.5-dev
-      - tk8.5-dev
-      - libosmesa6-dev
-
 install:
-#  - sudo apt-get update
-#  - apt-get update
-#  - apt-get install
-#  # headless opengl rendering
-#  - apt-get
+  - sudo apt-get update
+  - sudo apt-get install tcl8.5-dev tk8.5-dev
+  # headless opengl rendering
+#  - sudo apt-get libosmesa6-dev
+
+  # make sure we've got opengl
+  - sudo apt-get install python-qt4 python-qt4-gl libgl2ps-dev libfreeimage-dev
 
   # We do this conditionally because it saves us some downloading if the
   # version is the same.

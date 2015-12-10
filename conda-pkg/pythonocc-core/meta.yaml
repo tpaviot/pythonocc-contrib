@@ -1,39 +1,38 @@
 package:
   name: pythonocc-core
-  version: 0.16.0
+  version: 0.16.3dev
 
 source:
-    git_url: https://github.com/tpaviot/pythonocc-core.git
-    git_tag: 0.16.0
+    git_url: https://github.com/tpaviot/pythonocc-core.git             [unix]
+    git_tag: master # only master contains important fixes             [unix]
+    fn: pythonocc-core-master.zip                                      [win]
+    url: https://github.com/tpaviot/pythonocc-core/archive/master.zip  [win]
+    patches:
+      - fix_graphicshr_location.patch
 
 build:
-  number: 0
+  number: 1
   binary_relocation: true
 
 requirements:
   build:
+    - ninja             [win]
+    - patch             [win]
     - cmake
     - python
-    - opencascade_community_edition
-    - swig 2.0.10
+    - opencascade_community_edition ==0.16.1
+    - swig
+    - gcc               [linux]
 
   run:
     - python
-    - opencascade_community_edition
+    - opencascade_community_edition ==0.16.1
 
-#test:
-#  commands:
-#    # You can put test commands to be run here.  Use this to test that the
-#    # entry points work.
-#    - nosetests test/run_tests.py
-#
-#
-#  # You can also put a file called run_test.py in the recipe that will be run
-#  # at test time.
-#
-#  requires:
-#    # Put any additional test requirements here.  For example
-#    - nose
+test:
+  imports:
+    - OCC
+    - OCC.BRepPrimAPI
+
 
 about:
   home: https://github.com/tpaviot/pythonocc-core

@@ -76,7 +76,7 @@ VIEWER_TEMPLATE = """
             var controls = new THREE.OrbitControls(camera);
 
             var scene = new THREE.Scene();
-            scene.add(new THREE.AmbientLight(0xcccccc));
+            scene.add(new THREE.AmbientLight(0x333333));
             directionalLight = new THREE.DirectionalLight(0xffffff);
             directionalLight.position.x = 1;
             directionalLight.position.y = -1;
@@ -94,6 +94,7 @@ VIEWER_TEMPLATE = """
             renderer.shadowMapType = THREE.PCFShadowMap;
 
             var render = function() {
+               update_lights();
                renderer.render(scene, camera);
             }
 
@@ -110,6 +111,12 @@ VIEWER_TEMPLATE = """
             }, false);
 
             var old_hash = null;
+
+            var update_lights = function() {
+                if (directionalLight != undefined) {
+                    directionalLight.position.copy( camera.position );
+                }
+            }
 
             var poll_for_changes = function() {
                 $.ajax({url:"/shape_list/%(viewer_id)s/", dataType:'json'}).then(function(shape_list) {

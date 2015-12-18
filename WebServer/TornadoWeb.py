@@ -118,6 +118,54 @@ VIEWER_TEMPLATE = """
                 }
             }
 
+            var fit_to_scene = function() {
+                // compute bounding sphere of whole scene
+                var center = new THREE.Vector3(0,0,0);
+                var radiuses = new Array();
+                var positions = new Array();
+                // compute center of all objects
+                scene.traverse(function(child) {
+                    if (child instanceof THREE.Mesh) {
+                        child.geometry.computeBoundingBox();
+                        var box = child.geometry.boundingBox;
+                        var curCenter = new THREE.Vector3().copy(box.min).add(box.max).multiplyScalar(0.5);
+                        var radius = new THREE.Vector3().copy(box.max).distanceTo(box.min)/2.;
+                        center.add(curCenter);
+                        positions.push(curCenter);
+                        radiuses.push(radius);
+                    }
+                });
+                if (radiuses.length > 0) {
+                    center.divideScalar(radiuses.length);
+                }
+                var maxRad = 1.;
+                // compute bounding radius
+                for (var ichild = 0; ichild < radiuses.length; ++ichild) {
+                    var distToCenter = positions[ichild].distanceTo(center);
+                    var totalDist = distToCenter + radiuses[ichild];
+                    if (totalDist > maxRad) {
+                        maxRad = totalDist;
+                    }
+                }
+                camera.lookAt(center);
+                var direction = new THREE.Vector3().copy(camera.position).sub(controls.target);
+                var len = direction.length();
+                direction.normalize();
+                
+                // compute new distance of camera to middle of scene to fit the object to screen
+                var lnew = maxRad / Math.sin(camera.fov/180. * Math.PI / 2.);
+                direction.multiplyScalar(lnew);
+                
+                var pnew = new THREE.Vector3().copy(center).add(direction);
+                // change near far values to avoid culling of objects 
+                camera.position.set(pnew.x, pnew.y, pnew.z);
+                camera.far = lnew*50;
+                camera.near = lnew*50*0.001;
+                camera.updateProjectionMatrix();
+                controls.target = center;
+                controls.update();
+            }
+
             var poll_for_changes = function() {
                 $.ajax({url:"/shape_list/%(viewer_id)s/", dataType:'json'}).then(function(shape_list) {
                     if (shape_list.hash == old_hash) return;
@@ -150,6 +198,7 @@ VIEWER_TEMPLATE = """
                         if (r) {
                             r().then(function(mesh) {
                                 scene.add(mesh);
+                                fit_to_scene();
                                 make_requests();
                             });
                         } else {

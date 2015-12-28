@@ -15,7 +15,7 @@ source:
     - retina.patch       [osx]
 
 build:
-   number: 3
+   number: 4
    binary_relocation: true # (defaults to true)
    features:
     - vc9                [win and py27]

@@ -4,7 +4,7 @@ package:
 
 source:
     git_url: https://github.com/tpaviot/pythonocc-core.git             [unix]
-    git_tag: master # only master contains important fixes             [unix]
+    git_tag: master                                                    [unix]  # only master contains important fixes    
     fn: pythonocc-core-master.zip                                      [win]
     url: https://github.com/tpaviot/pythonocc-core/archive/master.zip  [win]
     patches:

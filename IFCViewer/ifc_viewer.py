@@ -24,6 +24,8 @@ except ImportError:
     print("This example requires ifcopenshell for python. Please go to  http://ifcopenshell.org/python.html")
 from OCC.Display.SimpleGui import init_display
 
+import ifc_metadata
+
 # viewer settings
 settings = ifcopenshell.geom.settings()
 settings.set(settings.USE_PYTHON_OPENCASCADE, True)
@@ -36,6 +38,7 @@ print("file opened.")
 # The geometric elements in an IFC file are the IfcProduct elements.
 # So these are opened and displayed.
 products = ifc_file.by_type("IfcProduct")
+metadata = ifc_metadata.metadata_dictionary(ifc_file)
 
 # First filter products to display
 # just keep the ones with a 3d representation
@@ -57,6 +60,7 @@ for product in products_to_display:
         product_shapes.append((product, shape))
         idx += 1
         print("\r[%i%%]Product: %s" % (int(idx*100/len(products_to_display)), product))
+        print(metadata[product])
 
 # Initialize a graphical display window
 print("Initializing pythonocc display ...", end="")

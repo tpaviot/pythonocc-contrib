@@ -53,24 +53,34 @@ print("Products to display: %i" % len(products_to_display))
 # For every product a shape is created if the shape has a Representation.
 print("Traverse data with associated 3d geometry")
 idx = 0
-product_shapes = []
+product_shapes = {}
 for product in products_to_display:
         # display current product
         shape = ifcopenshell.geom.create_shape(settings, product).geometry
-        product_shapes.append((product, shape))
+        product_shapes[shape] = product
         idx += 1
         print("\r[%i%%]Product: %s" % (int(idx*100/len(products_to_display)), product))
-        print(metadata[product])
+        #print(metadata[product])
+
+
+def print_shape_properties(shp, *kwargs):
+    """ a callback that prints properties of the selected shape
+    """
+    for shape in shp:
+        print(product_shapes[shape])
+        print(metadata[product_shapes[shape]])
 
 # Initialize a graphical display window
 print("Initializing pythonocc display ...", end="")
 display, start_display, add_menu, add_function_to_menu = init_display()
 print("initialization ok.")
+# register callback
+display.register_select_callback(print_shape_properties)
 # then pass each shape to the display
 nbr_shapes = len(product_shapes)
 idx = 0
 for ps in product_shapes:
-    display.DisplayShape((ps[1]))
+    display.DisplayShape(ps)
     idx += 1
     # progress bar
     print("[%i%%] Sending shapes to pythonocc display." % int(idx*100/nbr_shapes))

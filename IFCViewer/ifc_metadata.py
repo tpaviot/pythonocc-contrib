@@ -19,17 +19,15 @@ from __future__ import print_function
 
 try:
     import ifcopenshell
-    import ifcopenshell.geom.occ_utils
 except ImportError:
     print("This example requires ifcopenshell for python. Please go to  http://ifcopenshell.org/python.html")
 
+
 class metadata_dictionary(object):
-    
     def __init__(self, file):
         self.file = file
         self.cache = {}
-        
-        
+
     def process(self, i):
         if i.is_a("IfcRelDefinesByProperties"):
             return self[i.RelatingPropertyDefinition]
@@ -44,8 +42,7 @@ class metadata_dictionary(object):
             # a different attribute name, but the same index (3).
             return i.Name, i[3]
         # TODO: Not all subtypes of IfcProperty currently implemented
-        
-        
+
     def __getitem__(self, i):
         id = i.id()
         if id in self.cache:
@@ -67,11 +64,11 @@ class metadata_dictionary(object):
                     props = i.Name, props
                 self.cache[id] = props
                 return props
-                
+
     def __iter__(self):
         for object in self.file.by_type("IfcObject"):
             yield object.GlobalId, self[object]
-                
+
 if __name__ == "__main__":
     import sys
     import pprint
@@ -82,13 +79,13 @@ if __name__ == "__main__":
     print("file opened.", file=sys.stderr)
 
     metadata = metadata_dictionary(ifc_file)
-    
+
     for product in ifc_file.by_type("IfcProduct"):
         print(product)
         print("=" * 20)
         pprint.pprint(metadata[product])
         print()
-        
+
     # Alternatively, convert to a dict directly
     d = dict(metadata)
     pprint.pprint(d)

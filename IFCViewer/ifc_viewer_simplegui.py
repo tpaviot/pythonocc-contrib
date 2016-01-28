@@ -23,6 +23,8 @@ try:
 except ImportError:
     print("This example requires ifcopenshell for python. Please go to  http://ifcopenshell.org/python.html")
 from OCC.Display.SimpleGui import init_display
+from OCC.Bnd import Bnd_Box
+from OCC.BRepBndLib import brepbndlib_Add
 
 import ifc_metadata
 
@@ -65,10 +67,36 @@ for product in products_to_display:
 
 def print_shape_properties(shp, *kwargs):
     """ a callback that prints properties of the selected shape
+    Pretty printing properties
     """
     for shape in shp:
-        print(product_shapes[shape])
-        print(metadata[product_shapes[shape]])
+        print(shape.ShapeType())
+        print("#################\nProduct properties:")
+        print("#IFC definition :")
+        print("%s" % product_shapes[shape])
+        print("#################")
+        print("#IFC Properties")
+        properties = metadata[product_shapes[shape]]
+        for prop in properties:
+            print(prop)
+            subproperties = properties[prop]
+            for subprop in subproperties:
+                print("\t%s:%s" % (subprop, subproperties[subprop]))
+
+
+def compute_bbox(shp, *kwargs):
+    print("#Computed bounding box")
+    for shape in shp:
+        bbox = Bnd_Box()
+        brepbndlib_Add(shape, bbox)
+        xmin, ymin, zmin, xmax, ymax, zmax = bbox.Get()
+        dx = xmax - xmin
+        dy = ymax - ymin
+        dz = zmax - zmin
+        print("\tdimensions: dx=%f, dy=%f, dz=%f." % (dx, dy, dz))
+        print("\tcenter: x=%f, y=%f, z=%f" % (xmin + dx/2.,
+                                              ymin + dy/2.,
+                                              zmin + dz/2.))
 
 # Initialize a graphical display window
 print("Initializing pythonocc display ...", end="")
@@ -76,6 +104,7 @@ display, start_display, add_menu, add_function_to_menu = init_display()
 print("initialization ok.")
 # register callback
 display.register_select_callback(print_shape_properties)
+display.register_select_callback(compute_bbox)
 # then pass each shape to the display
 nbr_shapes = len(product_shapes)
 idx = 0

@@ -43,6 +43,10 @@ echo "Starting build with -j $CPU_COUNT ..."
 make -j $CPU_COUNT | grep Built
 make install
 
+if [ `uname` != Darwin ]; then
+    python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/OCE-libraries-release.cmake
+fi
+
 # Run OCE tests
 # <<< FAILS FOR THE MOMENT >>>
 

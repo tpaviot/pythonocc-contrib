@@ -1,0 +1,97 @@
+<!DOCTYPE HTML><html lang="en">
+<head>
+    <title>pythonOCC 0.17.2-dev x3dom renderer</title>
+    <meta name='Author' content='Thomas Paviot - tpaviot@gmail.com'>
+    <meta name='Keywords' content='WebGl,pythonOCC'>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="http://x3dom.org/release/x3dom.css" charset="utf-8" ></link>
+    <script type="text/javascript" src="http://x3dom.org/release/x3dom-full.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js" ></script>
+    <style type="text/css">
+        body {
+            background: linear-gradient(#ced7de, #808080);
+            margin: 0px;
+            overflow: hidden;
+        }
+        #pythonocc_rocks {
+            padding: 5px;
+            position: absolute;
+            left: 1%;
+            top: 85%;
+            height: 60px;
+            width: 305px;
+            border-radius: 5px;
+            border: 2px solid #f7941e;
+            opacity: 0.7;
+            font-family: Arial;
+            background-color: #414042;
+            color: #ffffff;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+        #selection_info {
+            padding: 5px;
+            position: absolute;
+            left: 85%;
+            top: 1%;
+            height: 22px;
+            width: 200px;
+            border-radius: 5px;
+            border: 2px solid #f7941e;
+            opacity: 0.7;
+            font-family: Arial;
+            background-color: #414042;
+            color: #ffffff;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+        a {
+            color: #f7941e;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="x3d_scene">
+<x3d style="width:100%;border: none" >
+<scene>
+		<inline mapDEFToID="true" url="shp1602756779.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1303388331.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1602906155.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1321216040.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1605527595.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1609197611.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1307207723.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1321206568.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1320909608.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1303537707.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1300916267.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1300766891.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1307058347.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1609048235.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1321281576.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1152888216.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1324579624.x3d"></inline>
+		<inline mapDEFToID="true" url="shp1605378219.x3d"></inline>
+</scene>
+</x3d>
+</div>
+    <div id="pythonocc_rocks">
+        <b>pythonOCC 0.17.2-dev <a href="htpp://www.x3dom.org" target="_blank">x3dom</a> renderer</b><hr>
+        Check our blog at
+        <a style="font-size:14px;" href=http://www.pythonocc.org>http://www.pythonocc.org</a>
+    </div>
+    <div id="selection_info">
+        <input type="button" value="Fit All" onclick="fitAll();">
+    </div>
+    <script>
+    function fitAll(){
+        document.getElementsByTagName('x3d')[0].runtime.showAll();
+    }
+    </script>
+</body>
+</html>

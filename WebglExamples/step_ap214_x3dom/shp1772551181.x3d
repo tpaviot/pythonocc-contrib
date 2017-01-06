@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D style="width:100%;border: none" profile="Immersive" version="3.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.2.xsd">
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile="Immersive" version="3.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.3.xsd">
 <head>
     <meta name="generator" content="pythonOCC X3D exporter (www.pythonocc.org)"/>
+    <meta name='title' content='c:\users\thomas\appdata\local\temp\tmpsyin3p\shp1772551181.x3d'/>
+    <meta name='creator' content='pythonocc generator'/> 
+	<meta name='description' content='pythonocc x3dom based shape rendering'/>
 </head>
 <Scene>
         <Shape DEF="shape0"><Appearance>
-<Material diffuseColor='0.586646 0.454762 0.404208' shininess='0.9' specularColor='1 1 1' transparency='0'>
+<Material diffuseColor='0.0211595 0.325125 0.973988' shininess='0.9' specularColor='1 1 1' transparency='0'>
 </Material>
 </Appearance>
 <IndexedFaceSet coordIndex='0 1 2 -1
@@ -781,23 +785,23 @@
 -0 -0.294486 0.955656
 0 -0.405519 0.914087
 0 -0.129019 0.991642
--0 -3.55271e-16 1
+-0 -3.55271e-016 1
 -0 -0.143637 0.98963
 0 -0.129019 0.991642
 -0 -0.143637 0.98963
 0 -0.271852 0.962339
-0 -3.55271e-16 1
--0 -3.55271e-16 1
+0 -3.55271e-016 1
+-0 -3.55271e-016 1
 0 -0.129019 0.991642
-0 3.55271e-16 1
+0 3.55271e-016 1
 0 0.210193 0.97766
-0 3.55271e-16 1
+0 3.55271e-016 1
 0 0.219512 0.97561
 0 0.429915 0.90287
 0 0.210193 0.97766
 0 0.219512 0.97561
 0 0.210193 0.97766
-0 3.55271e-16 1
+0 3.55271e-016 1
 0 0.444669 0.895695
 0 0.639003 0.769204
 0 0.429915 0.90287
@@ -874,13 +878,13 @@
 0 0.294486 -0.955656
 0 0.405519 -0.914087
 0 0.129019 -0.991642
-0 -1.77636e-16 -1
+0 -1.77636e-016 -1
 0 0.143637 -0.98963
 0 0.129019 -0.991642
 0 0.143637 -0.98963
 0 0.271852 -0.962339
-0 -1.77636e-16 -1
-0 -1.77636e-16 -1
+0 -1.77636e-016 -1
+0 -1.77636e-016 -1
 0 0.129019 -0.991642
 -1 0 0
 -1 0 0
@@ -993,41 +997,44 @@
 ' containerField='normal'></Normal>
 </IndexedFaceSet>
 </Shape>
-<Shape DEF="edg0">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='5 67.5 50 5 67.5 70 '/></LineSet>
+<Switch whichChoice='0'>  <Group>
+    <Shape DEF="edg0">	<LineSet vertexCount='2'><Coordinate point='5 67.5 50 5 67.5 70 '/></LineSet>
 </Shape>
-<Shape DEF="edg1">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='5 82.5 50 5 67.5 50 '/></LineSet>
+    <Shape DEF="edg1">	<LineSet vertexCount='2'><Coordinate point='5 82.5 50 5 67.5 50 '/></LineSet>
 </Shape>
-<Shape DEF="edg2">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='5 82.5 70 5 82.5 50 '/></LineSet>
+    <Shape DEF="edg2">	<LineSet vertexCount='2'><Coordinate point='5 82.5 70 5 82.5 50 '/></LineSet>
 </Shape>
-<Shape DEF="edg3">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='5 67.5 70 5 82.5 70 '/></LineSet>
+    <Shape DEF="edg3">	<LineSet vertexCount='2'><Coordinate point='5 67.5 70 5 82.5 70 '/></LineSet>
 </Shape>
-<Shape DEF="edg4">	<LineSet vertexCount='16' lit='false' solid='false' pickable='false'><Coordinate point='5 75 65 5 76.051 64.8883 5 77.1496 64.5143 5 78.195 63.846 5 78.9992 63.0011 5 79.5492 62.0747 5 79.8914 61.0366 5 79.9997 59.9415 5 79.8659 58.8496 5 79.5002 57.821 5 78.9304 56.9093 5 78.199 56.1573 5 77.3602 55.5921 5 76.4724 55.2217 5 75.7182 55.0518 5 75 55 '/></LineSet>
+    <Shape DEF="edg4">	<LineSet vertexCount='16'><Coordinate point='5 75 65 5 76.051 64.8883 5 77.1496 64.5143 5 78.195 63.846 5 78.9992 63.0011 5 79.5492 62.0747 5 79.8914 61.0366 5 79.9997 59.9415 5 79.8659 58.8496 5 79.5002 57.821 5 78.9304 56.9093 5 78.199 56.1573 5 77.3602 55.5921 5 76.4724 55.2217 5 75.7182 55.0518 5 75 55 '/></LineSet>
 </Shape>
-<Shape DEF="edg5">	<LineSet vertexCount='16' lit='false' solid='false' pickable='false'><Coordinate point='5 75 55 5 73.949 55.1117 5 72.8504 55.4857 5 71.805 56.154 5 71.0008 56.9989 5 70.4508 57.9253 5 70.1086 58.9634 5 70.0003 60.0585 5 70.1341 61.1504 5 70.4998 62.179 5 71.0696 63.0907 5 71.801 63.8427 5 72.6398 64.4079 5 73.5276 64.7783 5 74.2818 64.9482 5 75 65 '/></LineSet>
+    <Shape DEF="edg5">	<LineSet vertexCount='16'><Coordinate point='5 75 55 5 73.949 55.1117 5 72.8504 55.4857 5 71.805 56.154 5 71.0008 56.9989 5 70.4508 57.9253 5 70.1086 58.9634 5 70.0003 60.0585 5 70.1341 61.1504 5 70.4998 62.179 5 71.0696 63.0907 5 71.801 63.8427 5 72.6398 64.4079 5 73.5276 64.7783 5 74.2818 64.9482 5 75 65 '/></LineSet>
 </Shape>
-<Shape DEF="edg6">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 67.5 50 5 67.5 50 '/></LineSet>
+    <Shape DEF="edg6">	<LineSet vertexCount='2'><Coordinate point='2 67.5 50 5 67.5 50 '/></LineSet>
 </Shape>
-<Shape DEF="edg7">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 67.5 70 5 67.5 70 '/></LineSet>
+    <Shape DEF="edg7">	<LineSet vertexCount='2'><Coordinate point='2 67.5 70 5 67.5 70 '/></LineSet>
 </Shape>
-<Shape DEF="edg8">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 67.5 70 2 67.5 50 '/></LineSet>
+    <Shape DEF="edg8">	<LineSet vertexCount='2'><Coordinate point='2 67.5 70 2 67.5 50 '/></LineSet>
 </Shape>
-<Shape DEF="edg9">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 67.5 50 2 82.5 50 '/></LineSet>
+    <Shape DEF="edg9">	<LineSet vertexCount='2'><Coordinate point='2 67.5 50 2 82.5 50 '/></LineSet>
 </Shape>
-<Shape DEF="edg10">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 82.5 50 5 82.5 50 '/></LineSet>
+    <Shape DEF="edg10">	<LineSet vertexCount='2'><Coordinate point='2 82.5 50 5 82.5 50 '/></LineSet>
 </Shape>
-<Shape DEF="edg11">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 82.5 70 5 82.5 70 '/></LineSet>
+    <Shape DEF="edg11">	<LineSet vertexCount='2'><Coordinate point='2 82.5 70 5 82.5 70 '/></LineSet>
 </Shape>
-<Shape DEF="edg12">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 82.5 50 2 82.5 70 '/></LineSet>
+    <Shape DEF="edg12">	<LineSet vertexCount='2'><Coordinate point='2 82.5 50 2 82.5 70 '/></LineSet>
 </Shape>
-<Shape DEF="edg13">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='2 82.5 70 2 67.5 70 '/></LineSet>
+    <Shape DEF="edg13">	<LineSet vertexCount='2'><Coordinate point='2 82.5 70 2 67.5 70 '/></LineSet>
 </Shape>
-<Shape DEF="edg14">	<LineSet vertexCount='17' lit='false' solid='false' pickable='false'><Coordinate point='2 75 65 2 76.0976 64.8781 2 77.2233 64.4785 2 78.1642 63.8714 2 78.9475 63.0688 2 79.5708 62.0267 2 79.913 60.9285 2 79.9984 59.8738 2 79.8606 58.8274 2 79.5173 57.8567 2 79.0099 57.0133 2 78.3917 56.3263 2 77.716 55.802 2 77.0276 55.4296 2 76.3593 55.1883 2 75.6451 55.0418 2 75 55 '/></LineSet>
+    <Shape DEF="edg14">	<LineSet vertexCount='17'><Coordinate point='2 75 65 2 76.0976 64.8781 2 77.2233 64.4785 2 78.1642 63.8714 2 78.9475 63.0688 2 79.5708 62.0267 2 79.913 60.9285 2 79.9984 59.8738 2 79.8606 58.8274 2 79.5173 57.8567 2 79.0099 57.0133 2 78.3917 56.3263 2 77.716 55.802 2 77.0276 55.4296 2 76.3593 55.1883 2 75.6451 55.0418 2 75 55 '/></LineSet>
 </Shape>
-<Shape DEF="edg15">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='5 75 55 2 75 55 '/></LineSet>
+    <Shape DEF="edg15">	<LineSet vertexCount='2'><Coordinate point='5 75 55 2 75 55 '/></LineSet>
 </Shape>
-<Shape DEF="edg16">	<LineSet vertexCount='2' lit='false' solid='false' pickable='false'><Coordinate point='5 75 65 2 75 65 '/></LineSet>
+    <Shape DEF="edg16">	<LineSet vertexCount='2'><Coordinate point='5 75 65 2 75 65 '/></LineSet>
 </Shape>
-<Shape DEF="edg17">	<LineSet vertexCount='17' lit='false' solid='false' pickable='false'><Coordinate point='2 75 55 2 73.9024 55.122 2 72.7767 55.5215 2 71.8358 56.1286 2 71.0525 56.9312 2 70.4292 57.9733 2 70.087 59.0715 2 70.0016 60.1262 2 70.1394 61.1726 2 70.4827 62.1433 2 70.9901 62.9867 2 71.6083 63.6737 2 72.284 64.198 2 72.9724 64.5704 2 73.6407 64.8117 2 74.3549 64.9582 2 75 65 '/></LineSet>
+    <Shape DEF="edg17">	<LineSet vertexCount='17'><Coordinate point='2 75 55 2 73.9024 55.122 2 72.7767 55.5215 2 71.8358 56.1286 2 71.0525 56.9312 2 70.4292 57.9733 2 70.087 59.0715 2 70.0016 60.1262 2 70.1394 61.1726 2 70.4827 62.1433 2 70.9901 62.9867 2 71.6083 63.6737 2 72.284 64.198 2 72.9724 64.5704 2 73.6407 64.8117 2 74.3549 64.9582 2 75 65 '/></LineSet>
 </Shape>
+  </Group>
+</Switch>
 </Scene>
 </X3D>

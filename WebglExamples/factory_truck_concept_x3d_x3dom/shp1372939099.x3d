@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile="Immersive" version="3.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.3.xsd">
+<head>
+    <meta name="generator" content="pythonocc-0.17.2 X3D exporter (www.pythonocc.org)"/>
+    <meta name="title" content="shp1372939099.x3d"/>
+    <meta name="creator" content="pythonocc-0.17.2 generator"/>
+    <meta name="identifier" content="http://www.pythonocc.org"/>
+    <meta name="description" content="pythonocc-0.17.2 x3dom based shape rendering"/>
+</head>
+<Scene>
+        <Shape DEF="shape0"><Appearance>
+<Material diffuseColor='0.65 0.65 0.65' shininess='0.9' specularColor='1 1 1' transparency='0'>
+</Material>
+</Appearance>
+<TriangleSet solid='false'>
+<Coordinate point='1295.8 825.5 1981.2
+1295.4 825.5 1981.2
+1295.4 825.5 1778
+1295.8 825.5 1981.2
+1295.4 825.5 1778
+1295.8 825.5 1778
+1295.8 876.3 1981.2
+1295.4 876.3 1981.2
+1295.4 825.5 1981.2
+1295.8 876.3 1981.2
+1295.4 825.5 1981.2
+1295.8 825.5 1981.2
+1295.4 876.3 1981.2
+1295.8 876.3 1981.2
+1295.8 876.3 1778
+1295.4 876.3 1981.2
+1295.8 876.3 1778
+1295.4 876.3 1778
+1295.4 876.3 1778
+1295.8 876.3 1778
+1295.8 825.5 1778
+1295.4 876.3 1778
+1295.8 825.5 1778
+1295.4 825.5 1778
+1295.8 825.5 1981.2
+1295.8 825.5 1778
+1295.8 876.3 1778
+1295.8 876.3 1981.2
+1295.8 825.5 1981.2
+1295.8 876.3 1778
+1295.4 825.5 1778
+1295.4 825.5 1981.2
+1295.4 876.3 1778
+1295.4 825.5 1981.2
+1295.4 876.3 1981.2
+1295.4 876.3 1778
+'></Coordinate>
+<Normal vector='-0 -1 -4.47343e-033
+-0 -1 -4.47343e-033
+-0 -1 -4.47343e-033
+-0 -1 -4.47343e-033
+-0 -1 -4.47343e-033
+-0 -1 -4.47343e-033
+-1.17128e-016 -4.47343e-033 1
+-1.17128e-016 -4.47343e-033 1
+-1.17128e-016 -4.47343e-033 1
+-1.17128e-016 -4.47343e-033 1
+-1.17128e-016 -4.47343e-033 1
+-1.17128e-016 -4.47343e-033 1
+0 1 4.47343e-033
+0 1 4.47343e-033
+0 1 4.47343e-033
+0 1 4.47343e-033
+0 1 4.47343e-033
+0 1 4.47343e-033
+1.17128e-016 4.47343e-033 -1
+1.17128e-016 4.47343e-033 -1
+1.17128e-016 4.47343e-033 -1
+1.17128e-016 4.47343e-033 -1
+1.17128e-016 4.47343e-033 -1
+1.17128e-016 4.47343e-033 -1
+1 -0 1.17128e-016
+1 -0 1.17128e-016
+1 -0 1.17128e-016
+1 -0 1.17128e-016
+1 -0 1.17128e-016
+1 -0 1.17128e-016
+-1 0 -1.17128e-016
+-1 0 -1.17128e-016
+-1 0 -1.17128e-016
+-1 0 -1.17128e-016
+-1 0 -1.17128e-016
+-1 0 -1.17128e-016
+'></Normal>
+</TriangleSet>
+</Shape>
+<Switch whichChoice='0'>
+	<Group>
+	</Group>
+</Switch>
+</Scene>
+</X3D>

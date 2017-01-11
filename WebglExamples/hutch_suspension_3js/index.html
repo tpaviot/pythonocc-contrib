@@ -1,0 +1,2589 @@
+<!DOCTYPE HTML><html>
+<head>
+    <title>pythonOCC 0.17.2 webgl renderer</title>
+    <meta name='Author' content='Thomas Paviot - tpaviot@gmail.com'>
+    <meta name='Keywords' content='WebGl,pythonOCC'>
+    <meta charset="utf-8">
+    <style type="text/css">
+        body {
+            background: linear-gradient(#ced7de, #808080);
+            margin: 0px;
+            overflow: hidden;
+        }
+        #pythonocc_rocks {
+            padding: 5px;
+            position: absolute;
+            left: 1%;
+            top: 85%;
+            height: 60px;
+            width: 305px;
+            border-radius: 5px;
+            border: 2px solid #f7941e;
+            opacity: 0.7;
+            font-family: Arial;
+            background-color: #414042;
+            color: #ffffff;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+        a {
+            color: #f7941e;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <div id="pythonocc_rocks">
+        <b>pythonOCC 0.17.2 <a href="https://github.com/mrdoob/three.js" target="_blank">three.js</a> renderer</b><hr>
+        Check our blog at
+        <a style="font-size:14px;" href=http://www.pythonocc.org>http://www.pythonocc.org</a>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/three.js/r83/build/three.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/three.js/r83/examples/js/controls/OrbitControls.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/three.js/r83/examples/js/libs/stats.min.js"></script>
+
+
+
+    
+    
+    <script type="text/javascript">
+        var camera, scene, renderer, object, stats, container, shape_material;
+        var mouseX = 0;
+        var mouseXOnMouseDown = 0;
+        var mouseY = 0;
+        var mouseYOnMouseDown = 0;
+        var moveForward = false;
+        var moveBackward = false;
+        var moveLeft = false;
+        var moveRight = false;
+        var moveUp = false;
+        var moveDown = false;
+        var windowHalfX = window.innerWidth / 2;
+        var windowHalfY = window.innerHeight / 2;
+        var selected_target_color_r = 0;
+        var selected_target_color_g = 0;
+        var selected_target_color_b = 0;
+        var selected_target = null;
+        init();
+        animate();
+
+        function init() {
+            container = document.createElement( 'div' );
+            document.body.appendChild( container );
+
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 200);
+            camera.position.z = 100;
+            controls = new THREE.OrbitControls(camera);
+            // for selection
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+            // create scene
+            scene = new THREE.Scene();
+            scene.add(new THREE.AmbientLight(0x101010));
+            directionalLight = new THREE.DirectionalLight(0xffffff);
+            directionalLight.position.x = 1;
+            directionalLight.position.y = -1;
+            directionalLight.position.z = 2;
+            directionalLight.position.normalize();
+            scene.add(directionalLight);
+            light1 = new THREE.PointLight(0xffffff);
+            scene.add(light1);
+            
+            
+            loader = new THREE.BufferGeometryLoader();
+	shp75be14591e134083b95b68408b2bbed3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp75be14591e134083b95b68408b2bbed3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp75be14591e134083b95b68408b2bbed3_phong_material);
+	scene.add(mesh);
+	});
+	shp55534dcec5a14c4c8b50569c8127afc0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp55534dcec5a14c4c8b50569c8127afc0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp55534dcec5a14c4c8b50569c8127afc0_phong_material);
+	scene.add(mesh);
+	});
+	shpce21866b213c483d8ea87eb62f49971a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpce21866b213c483d8ea87eb62f49971a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpce21866b213c483d8ea87eb62f49971a_phong_material);
+	scene.add(mesh);
+	});
+	shp17b5bf3ef20f455483c41def5e236842_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp17b5bf3ef20f455483c41def5e236842.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp17b5bf3ef20f455483c41def5e236842_phong_material);
+	scene.add(mesh);
+	});
+	shp352566b46fac49ef9c2d07cb19cdfbfc_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp352566b46fac49ef9c2d07cb19cdfbfc.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp352566b46fac49ef9c2d07cb19cdfbfc_phong_material);
+	scene.add(mesh);
+	});
+	shp6542f6cec8ce4519a34bccfb6e84fdf1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6542f6cec8ce4519a34bccfb6e84fdf1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6542f6cec8ce4519a34bccfb6e84fdf1_phong_material);
+	scene.add(mesh);
+	});
+	shp2f032e58399148e19cece89d33c760fb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2f032e58399148e19cece89d33c760fb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2f032e58399148e19cece89d33c760fb_phong_material);
+	scene.add(mesh);
+	});
+	shp00d103038c394e18a3a40951ad94c639_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp00d103038c394e18a3a40951ad94c639.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp00d103038c394e18a3a40951ad94c639_phong_material);
+	scene.add(mesh);
+	});
+	shp9803d282383449e9a6eafe8bb6455631_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9803d282383449e9a6eafe8bb6455631.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9803d282383449e9a6eafe8bb6455631_phong_material);
+	scene.add(mesh);
+	});
+	shp2ecc79b0eed8476d8ce086d19d23345e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2ecc79b0eed8476d8ce086d19d23345e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2ecc79b0eed8476d8ce086d19d23345e_phong_material);
+	scene.add(mesh);
+	});
+	shpd6a95983a1074147ae9d913e1030f8f3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd6a95983a1074147ae9d913e1030f8f3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd6a95983a1074147ae9d913e1030f8f3_phong_material);
+	scene.add(mesh);
+	});
+	shp6df2e97c084b459d986538282d798dc9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6df2e97c084b459d986538282d798dc9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6df2e97c084b459d986538282d798dc9_phong_material);
+	scene.add(mesh);
+	});
+	shp5190436584aa4083970fec2f53af5c93_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5190436584aa4083970fec2f53af5c93.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5190436584aa4083970fec2f53af5c93_phong_material);
+	scene.add(mesh);
+	});
+	shp7c4afc70334146cfbf7107a3560b373f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7c4afc70334146cfbf7107a3560b373f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7c4afc70334146cfbf7107a3560b373f_phong_material);
+	scene.add(mesh);
+	});
+	shp41a28cfbf75949c8a7b9282a169b6a48_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp41a28cfbf75949c8a7b9282a169b6a48.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp41a28cfbf75949c8a7b9282a169b6a48_phong_material);
+	scene.add(mesh);
+	});
+	shp487dd4de4b624271a772ecaa8d7629e3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp487dd4de4b624271a772ecaa8d7629e3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp487dd4de4b624271a772ecaa8d7629e3_phong_material);
+	scene.add(mesh);
+	});
+	shp3a0046850e8e4cd18d3ab6e4276eecec_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3a0046850e8e4cd18d3ab6e4276eecec.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3a0046850e8e4cd18d3ab6e4276eecec_phong_material);
+	scene.add(mesh);
+	});
+	shp30a5de617ccf43ef9e3407ab264ef0b9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp30a5de617ccf43ef9e3407ab264ef0b9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp30a5de617ccf43ef9e3407ab264ef0b9_phong_material);
+	scene.add(mesh);
+	});
+	shpd03da966b2d64a28aef8afaa47f651e4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd03da966b2d64a28aef8afaa47f651e4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd03da966b2d64a28aef8afaa47f651e4_phong_material);
+	scene.add(mesh);
+	});
+	shpa58ccdfcb5364873802ca0bb39aea370_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa58ccdfcb5364873802ca0bb39aea370.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa58ccdfcb5364873802ca0bb39aea370_phong_material);
+	scene.add(mesh);
+	});
+	shpb21aed1d2e9a4fcc98df07e84c8be259_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb21aed1d2e9a4fcc98df07e84c8be259.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb21aed1d2e9a4fcc98df07e84c8be259_phong_material);
+	scene.add(mesh);
+	});
+	shp6d7f6884d3fa47b29b285b5126904631_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6d7f6884d3fa47b29b285b5126904631.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6d7f6884d3fa47b29b285b5126904631_phong_material);
+	scene.add(mesh);
+	});
+	shp4fa9a7163fa746c7aa0910f5882b9df1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4fa9a7163fa746c7aa0910f5882b9df1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4fa9a7163fa746c7aa0910f5882b9df1_phong_material);
+	scene.add(mesh);
+	});
+	shpb7966d40a7b64d88ae0e108eae68715e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb7966d40a7b64d88ae0e108eae68715e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb7966d40a7b64d88ae0e108eae68715e_phong_material);
+	scene.add(mesh);
+	});
+	shpc22f82eaf31541878f39c2e302ad09ec_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc22f82eaf31541878f39c2e302ad09ec.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc22f82eaf31541878f39c2e302ad09ec_phong_material);
+	scene.add(mesh);
+	});
+	shpd85e6e9794e34ac2b6434d026a38348f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd85e6e9794e34ac2b6434d026a38348f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd85e6e9794e34ac2b6434d026a38348f_phong_material);
+	scene.add(mesh);
+	});
+	shp5fa4bf7d75d94548b60e6178f2c05db0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5fa4bf7d75d94548b60e6178f2c05db0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5fa4bf7d75d94548b60e6178f2c05db0_phong_material);
+	scene.add(mesh);
+	});
+	shpedf7e9864502487eadd56ef9d44ae7a2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpedf7e9864502487eadd56ef9d44ae7a2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpedf7e9864502487eadd56ef9d44ae7a2_phong_material);
+	scene.add(mesh);
+	});
+	shp55723b1efe2b416b9674a457518c80ad_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp55723b1efe2b416b9674a457518c80ad.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp55723b1efe2b416b9674a457518c80ad_phong_material);
+	scene.add(mesh);
+	});
+	shpba15d604af2b4ba19bd8201a172d3c63_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpba15d604af2b4ba19bd8201a172d3c63.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpba15d604af2b4ba19bd8201a172d3c63_phong_material);
+	scene.add(mesh);
+	});
+	shpa0b5a9a1bc9642acb67fd9478e629283_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa0b5a9a1bc9642acb67fd9478e629283.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa0b5a9a1bc9642acb67fd9478e629283_phong_material);
+	scene.add(mesh);
+	});
+	shpe810c67f1dc64ae0809f1b0e7cd592d2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe810c67f1dc64ae0809f1b0e7cd592d2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe810c67f1dc64ae0809f1b0e7cd592d2_phong_material);
+	scene.add(mesh);
+	});
+	shp77a1d44c2c6f4ee9b3d2727c69c5daa2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp77a1d44c2c6f4ee9b3d2727c69c5daa2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp77a1d44c2c6f4ee9b3d2727c69c5daa2_phong_material);
+	scene.add(mesh);
+	});
+	shp65eae07d393b40fca5e51f27d724a1f8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp65eae07d393b40fca5e51f27d724a1f8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp65eae07d393b40fca5e51f27d724a1f8_phong_material);
+	scene.add(mesh);
+	});
+	shp5d4d405df0b4483793695a0bb46213ec_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5d4d405df0b4483793695a0bb46213ec.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5d4d405df0b4483793695a0bb46213ec_phong_material);
+	scene.add(mesh);
+	});
+	shp0bfdbd1129a74d09bcae1689d4c322f8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0bfdbd1129a74d09bcae1689d4c322f8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0bfdbd1129a74d09bcae1689d4c322f8_phong_material);
+	scene.add(mesh);
+	});
+	shp04bdc5a74f6a4ccd85c0bdcb31d8e35b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp04bdc5a74f6a4ccd85c0bdcb31d8e35b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp04bdc5a74f6a4ccd85c0bdcb31d8e35b_phong_material);
+	scene.add(mesh);
+	});
+	shp41f2c0c095f742b488a3f4c3e88b82c3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp41f2c0c095f742b488a3f4c3e88b82c3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp41f2c0c095f742b488a3f4c3e88b82c3_phong_material);
+	scene.add(mesh);
+	});
+	shp82b6df9453464e4587e89bfb42d31a98_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp82b6df9453464e4587e89bfb42d31a98.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp82b6df9453464e4587e89bfb42d31a98_phong_material);
+	scene.add(mesh);
+	});
+	shp538ce9c556d243fcaf71f99efb742b6e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp538ce9c556d243fcaf71f99efb742b6e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp538ce9c556d243fcaf71f99efb742b6e_phong_material);
+	scene.add(mesh);
+	});
+	shp3497e1c120eb4fbe841f45aa4b3d1bef_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3497e1c120eb4fbe841f45aa4b3d1bef.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3497e1c120eb4fbe841f45aa4b3d1bef_phong_material);
+	scene.add(mesh);
+	});
+	shp1febcd83b2664f9ea58f5f962cbba3f7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1febcd83b2664f9ea58f5f962cbba3f7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1febcd83b2664f9ea58f5f962cbba3f7_phong_material);
+	scene.add(mesh);
+	});
+	shp2d47452d9db04f40ad8c0327745bf6cd_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2d47452d9db04f40ad8c0327745bf6cd.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2d47452d9db04f40ad8c0327745bf6cd_phong_material);
+	scene.add(mesh);
+	});
+	shpe99cb2b42f9a44bcb1e1e2012d5817a2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe99cb2b42f9a44bcb1e1e2012d5817a2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe99cb2b42f9a44bcb1e1e2012d5817a2_phong_material);
+	scene.add(mesh);
+	});
+	shpd877a788d73c46d5af17f66a453b2377_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd877a788d73c46d5af17f66a453b2377.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd877a788d73c46d5af17f66a453b2377_phong_material);
+	scene.add(mesh);
+	});
+	shp5701100f1eea40bfb2367fd4fa5ceedb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5701100f1eea40bfb2367fd4fa5ceedb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5701100f1eea40bfb2367fd4fa5ceedb_phong_material);
+	scene.add(mesh);
+	});
+	shp75ac917b3def40a58351e0324443d655_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp75ac917b3def40a58351e0324443d655.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp75ac917b3def40a58351e0324443d655_phong_material);
+	scene.add(mesh);
+	});
+	shp5b7607e7af8f4f779b263e84b5998b81_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5b7607e7af8f4f779b263e84b5998b81.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5b7607e7af8f4f779b263e84b5998b81_phong_material);
+	scene.add(mesh);
+	});
+	shp2b0720ab28b348738c97747bd3a93727_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2b0720ab28b348738c97747bd3a93727.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2b0720ab28b348738c97747bd3a93727_phong_material);
+	scene.add(mesh);
+	});
+	shp9f2047f9cb4743a18d2accf76b3b0a89_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9f2047f9cb4743a18d2accf76b3b0a89.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9f2047f9cb4743a18d2accf76b3b0a89_phong_material);
+	scene.add(mesh);
+	});
+	shp329d643b7554415a973a0e69fec1e56b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp329d643b7554415a973a0e69fec1e56b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp329d643b7554415a973a0e69fec1e56b_phong_material);
+	scene.add(mesh);
+	});
+	shp13dac50bdc1a471488fbae81ed7ab414_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp13dac50bdc1a471488fbae81ed7ab414.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp13dac50bdc1a471488fbae81ed7ab414_phong_material);
+	scene.add(mesh);
+	});
+	shp1610f1d4d364461583d364f58e17f270_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1610f1d4d364461583d364f58e17f270.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1610f1d4d364461583d364f58e17f270_phong_material);
+	scene.add(mesh);
+	});
+	shp3b0024c515954057925d48cbbbf24397_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3b0024c515954057925d48cbbbf24397.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3b0024c515954057925d48cbbbf24397_phong_material);
+	scene.add(mesh);
+	});
+	shpc3d93ee4f67f4d9c85a93d3050efc5ff_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc3d93ee4f67f4d9c85a93d3050efc5ff.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc3d93ee4f67f4d9c85a93d3050efc5ff_phong_material);
+	scene.add(mesh);
+	});
+	shp22e852b644d746da93275febc160fc5e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp22e852b644d746da93275febc160fc5e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp22e852b644d746da93275febc160fc5e_phong_material);
+	scene.add(mesh);
+	});
+	shp442ac7341d1d430a9f0c683b7cd3a986_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp442ac7341d1d430a9f0c683b7cd3a986.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp442ac7341d1d430a9f0c683b7cd3a986_phong_material);
+	scene.add(mesh);
+	});
+	shp1c8b4fb726274cd48b1541217d492a1d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1c8b4fb726274cd48b1541217d492a1d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1c8b4fb726274cd48b1541217d492a1d_phong_material);
+	scene.add(mesh);
+	});
+	shpac576876e90845e3b9c4cd82581374df_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpac576876e90845e3b9c4cd82581374df.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpac576876e90845e3b9c4cd82581374df_phong_material);
+	scene.add(mesh);
+	});
+	shpfb519de627354682b4a8a1177116634a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpfb519de627354682b4a8a1177116634a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpfb519de627354682b4a8a1177116634a_phong_material);
+	scene.add(mesh);
+	});
+	shp2c941398f0b8494b9e9c2f0e4d7cb0d2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2c941398f0b8494b9e9c2f0e4d7cb0d2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2c941398f0b8494b9e9c2f0e4d7cb0d2_phong_material);
+	scene.add(mesh);
+	});
+	shpf29f7e4e7bb249bfa2ad7dbb7a76fbef_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf29f7e4e7bb249bfa2ad7dbb7a76fbef.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf29f7e4e7bb249bfa2ad7dbb7a76fbef_phong_material);
+	scene.add(mesh);
+	});
+	shpa3a44a78ceef4fbc8997b1bf89011275_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa3a44a78ceef4fbc8997b1bf89011275.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa3a44a78ceef4fbc8997b1bf89011275_phong_material);
+	scene.add(mesh);
+	});
+	shp3f1efa72a7a347c4993a529a921a831e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3f1efa72a7a347c4993a529a921a831e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3f1efa72a7a347c4993a529a921a831e_phong_material);
+	scene.add(mesh);
+	});
+	shpaf8ced43195243b0a26384ce2ad162ea_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpaf8ced43195243b0a26384ce2ad162ea.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpaf8ced43195243b0a26384ce2ad162ea_phong_material);
+	scene.add(mesh);
+	});
+	shp61b0695d1f6b4b7c9f1c972b4dde9596_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp61b0695d1f6b4b7c9f1c972b4dde9596.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp61b0695d1f6b4b7c9f1c972b4dde9596_phong_material);
+	scene.add(mesh);
+	});
+	shpd0bc0d323fac42419227e7b4ca7e5215_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd0bc0d323fac42419227e7b4ca7e5215.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd0bc0d323fac42419227e7b4ca7e5215_phong_material);
+	scene.add(mesh);
+	});
+	shp9e6e9f3397804bcdab51b06d631e7370_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9e6e9f3397804bcdab51b06d631e7370.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9e6e9f3397804bcdab51b06d631e7370_phong_material);
+	scene.add(mesh);
+	});
+	shp594a4e5ea378403f93315be63999b20c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp594a4e5ea378403f93315be63999b20c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp594a4e5ea378403f93315be63999b20c_phong_material);
+	scene.add(mesh);
+	});
+	shp0cc16808d7d549be9b8640b767b18b61_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0cc16808d7d549be9b8640b767b18b61.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0cc16808d7d549be9b8640b767b18b61_phong_material);
+	scene.add(mesh);
+	});
+	shp72ef3efb58874c449471572be77c9b9a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp72ef3efb58874c449471572be77c9b9a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp72ef3efb58874c449471572be77c9b9a_phong_material);
+	scene.add(mesh);
+	});
+	shp9bc7bc29f0bd41179303c116b5bfb859_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9bc7bc29f0bd41179303c116b5bfb859.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9bc7bc29f0bd41179303c116b5bfb859_phong_material);
+	scene.add(mesh);
+	});
+	shp9b3ccff4bb2e404cabf293857ca33047_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9b3ccff4bb2e404cabf293857ca33047.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9b3ccff4bb2e404cabf293857ca33047_phong_material);
+	scene.add(mesh);
+	});
+	shpb8fad1a2cce247fdaf01b9ac288a4b9e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb8fad1a2cce247fdaf01b9ac288a4b9e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb8fad1a2cce247fdaf01b9ac288a4b9e_phong_material);
+	scene.add(mesh);
+	});
+	shp2ebfd87dee174901aba643750fd11dfc_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2ebfd87dee174901aba643750fd11dfc.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2ebfd87dee174901aba643750fd11dfc_phong_material);
+	scene.add(mesh);
+	});
+	shpe17d35f7038b43818127c746b7b0fdc6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe17d35f7038b43818127c746b7b0fdc6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe17d35f7038b43818127c746b7b0fdc6_phong_material);
+	scene.add(mesh);
+	});
+	shpe666cfe8f75e4497a8ed415276d91811_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe666cfe8f75e4497a8ed415276d91811.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe666cfe8f75e4497a8ed415276d91811_phong_material);
+	scene.add(mesh);
+	});
+	shpb51843980265493bb4bfa34e6368122e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb51843980265493bb4bfa34e6368122e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb51843980265493bb4bfa34e6368122e_phong_material);
+	scene.add(mesh);
+	});
+	shp7144b06e24834fca9533741c7f0fb5d4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7144b06e24834fca9533741c7f0fb5d4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7144b06e24834fca9533741c7f0fb5d4_phong_material);
+	scene.add(mesh);
+	});
+	shp37823ff15f8a484e8ff9604427782761_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp37823ff15f8a484e8ff9604427782761.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp37823ff15f8a484e8ff9604427782761_phong_material);
+	scene.add(mesh);
+	});
+	shp0b8037ca7e5f4a938ccf900854b7451e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0b8037ca7e5f4a938ccf900854b7451e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0b8037ca7e5f4a938ccf900854b7451e_phong_material);
+	scene.add(mesh);
+	});
+	shp8e4ce6204f0340c3b0ec0d603340fe67_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8e4ce6204f0340c3b0ec0d603340fe67.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8e4ce6204f0340c3b0ec0d603340fe67_phong_material);
+	scene.add(mesh);
+	});
+	shp99d3e8fb827b4778b88603f8ad04b178_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp99d3e8fb827b4778b88603f8ad04b178.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp99d3e8fb827b4778b88603f8ad04b178_phong_material);
+	scene.add(mesh);
+	});
+	shp1d73154a9e9942be857bac887703bb9c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1d73154a9e9942be857bac887703bb9c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1d73154a9e9942be857bac887703bb9c_phong_material);
+	scene.add(mesh);
+	});
+	shp968be50849e84ca5bd196e5d6aee265b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp968be50849e84ca5bd196e5d6aee265b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp968be50849e84ca5bd196e5d6aee265b_phong_material);
+	scene.add(mesh);
+	});
+	shpbe6285f9222f45c98756fe3b3af554f8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbe6285f9222f45c98756fe3b3af554f8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbe6285f9222f45c98756fe3b3af554f8_phong_material);
+	scene.add(mesh);
+	});
+	shp5eaaa005c5dc460e9a3d4258a972a807_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5eaaa005c5dc460e9a3d4258a972a807.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5eaaa005c5dc460e9a3d4258a972a807_phong_material);
+	scene.add(mesh);
+	});
+	shp6d4aff0831834accb6694b01b4ce4bdb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6d4aff0831834accb6694b01b4ce4bdb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6d4aff0831834accb6694b01b4ce4bdb_phong_material);
+	scene.add(mesh);
+	});
+	shp180c4c2f9995402dbec84d078b0384ea_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp180c4c2f9995402dbec84d078b0384ea.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp180c4c2f9995402dbec84d078b0384ea_phong_material);
+	scene.add(mesh);
+	});
+	shp7de23bf7761f4a24b0bf67c52877fcd3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7de23bf7761f4a24b0bf67c52877fcd3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7de23bf7761f4a24b0bf67c52877fcd3_phong_material);
+	scene.add(mesh);
+	});
+	shpbf81fa659fdf4c6c87a4f2b3519bab45_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbf81fa659fdf4c6c87a4f2b3519bab45.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbf81fa659fdf4c6c87a4f2b3519bab45_phong_material);
+	scene.add(mesh);
+	});
+	shp7453202c108a4f5b8c2a2d5f9908dcc1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7453202c108a4f5b8c2a2d5f9908dcc1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7453202c108a4f5b8c2a2d5f9908dcc1_phong_material);
+	scene.add(mesh);
+	});
+	shp7ddf3c16a16f4ce1962cfc77241362de_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7ddf3c16a16f4ce1962cfc77241362de.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7ddf3c16a16f4ce1962cfc77241362de_phong_material);
+	scene.add(mesh);
+	});
+	shp36aeff722b414ba785acbf2042491916_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp36aeff722b414ba785acbf2042491916.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp36aeff722b414ba785acbf2042491916_phong_material);
+	scene.add(mesh);
+	});
+	shp086bc0b3299f400db8ae9179426c5874_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp086bc0b3299f400db8ae9179426c5874.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp086bc0b3299f400db8ae9179426c5874_phong_material);
+	scene.add(mesh);
+	});
+	shp8e0ffb6f5f004187b7f6c170632f618e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8e0ffb6f5f004187b7f6c170632f618e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8e0ffb6f5f004187b7f6c170632f618e_phong_material);
+	scene.add(mesh);
+	});
+	shpb63ba522928b451cb64ae0942d6a0f8e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb63ba522928b451cb64ae0942d6a0f8e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb63ba522928b451cb64ae0942d6a0f8e_phong_material);
+	scene.add(mesh);
+	});
+	shp21fb9472aa644a9686ea395baa2b2dd9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp21fb9472aa644a9686ea395baa2b2dd9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp21fb9472aa644a9686ea395baa2b2dd9_phong_material);
+	scene.add(mesh);
+	});
+	shp9ce1f602b4944201875422e7448a73c6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9ce1f602b4944201875422e7448a73c6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9ce1f602b4944201875422e7448a73c6_phong_material);
+	scene.add(mesh);
+	});
+	shpf1689f81aee34d74abbc95a0b38faeda_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf1689f81aee34d74abbc95a0b38faeda.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf1689f81aee34d74abbc95a0b38faeda_phong_material);
+	scene.add(mesh);
+	});
+	shp35c77ecbcb2b4c7eb8478219f0926779_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp35c77ecbcb2b4c7eb8478219f0926779.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp35c77ecbcb2b4c7eb8478219f0926779_phong_material);
+	scene.add(mesh);
+	});
+	shp15383e653ed24b85883eefd97c130a3d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp15383e653ed24b85883eefd97c130a3d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp15383e653ed24b85883eefd97c130a3d_phong_material);
+	scene.add(mesh);
+	});
+	shp27cb12fb0e654482bd25c8622d2151a1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp27cb12fb0e654482bd25c8622d2151a1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp27cb12fb0e654482bd25c8622d2151a1_phong_material);
+	scene.add(mesh);
+	});
+	shp477549a820e14860b440c73930bf5aec_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp477549a820e14860b440c73930bf5aec.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp477549a820e14860b440c73930bf5aec_phong_material);
+	scene.add(mesh);
+	});
+	shp9c727dc665ac4497b71ea2102fc63d8f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9c727dc665ac4497b71ea2102fc63d8f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9c727dc665ac4497b71ea2102fc63d8f_phong_material);
+	scene.add(mesh);
+	});
+	shpbd04ce2790da4634868fc38c13d2584a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbd04ce2790da4634868fc38c13d2584a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbd04ce2790da4634868fc38c13d2584a_phong_material);
+	scene.add(mesh);
+	});
+	shp80114d140b3c42e599ae3856bea94764_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp80114d140b3c42e599ae3856bea94764.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp80114d140b3c42e599ae3856bea94764_phong_material);
+	scene.add(mesh);
+	});
+	shp94aa1cbe80a54ce9b1259c1a7ea5a92e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp94aa1cbe80a54ce9b1259c1a7ea5a92e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp94aa1cbe80a54ce9b1259c1a7ea5a92e_phong_material);
+	scene.add(mesh);
+	});
+	shp500586f32ed5442da48dee7bf684fb04_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp500586f32ed5442da48dee7bf684fb04.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp500586f32ed5442da48dee7bf684fb04_phong_material);
+	scene.add(mesh);
+	});
+	shp0bb0235ddc9b4380b3742e8b09a093f0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0bb0235ddc9b4380b3742e8b09a093f0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0bb0235ddc9b4380b3742e8b09a093f0_phong_material);
+	scene.add(mesh);
+	});
+	shp6251f2f5df1246fabf90a6bb3ed11054_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6251f2f5df1246fabf90a6bb3ed11054.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6251f2f5df1246fabf90a6bb3ed11054_phong_material);
+	scene.add(mesh);
+	});
+	shp1c11ecd8ea2649da8a8adad214341563_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1c11ecd8ea2649da8a8adad214341563.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1c11ecd8ea2649da8a8adad214341563_phong_material);
+	scene.add(mesh);
+	});
+	shpc03a170514c244e58f2b542d615a803b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc03a170514c244e58f2b542d615a803b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc03a170514c244e58f2b542d615a803b_phong_material);
+	scene.add(mesh);
+	});
+	shpef9a85c71fc343d7bde1488fbdedb685_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpef9a85c71fc343d7bde1488fbdedb685.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpef9a85c71fc343d7bde1488fbdedb685_phong_material);
+	scene.add(mesh);
+	});
+	shp340fa75edc9143448ea2ed4add4dfce8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp340fa75edc9143448ea2ed4add4dfce8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp340fa75edc9143448ea2ed4add4dfce8_phong_material);
+	scene.add(mesh);
+	});
+	shp1ed9e124480045adabb184da69dd3583_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1ed9e124480045adabb184da69dd3583.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1ed9e124480045adabb184da69dd3583_phong_material);
+	scene.add(mesh);
+	});
+	shpc0b7de6f70994a609ae4be9d3bcdf473_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc0b7de6f70994a609ae4be9d3bcdf473.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc0b7de6f70994a609ae4be9d3bcdf473_phong_material);
+	scene.add(mesh);
+	});
+	shp5226608b5a1b48f1902c1aa89793da73_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5226608b5a1b48f1902c1aa89793da73.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5226608b5a1b48f1902c1aa89793da73_phong_material);
+	scene.add(mesh);
+	});
+	shp051518ccf7f24bfeb87f203343871d03_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp051518ccf7f24bfeb87f203343871d03.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp051518ccf7f24bfeb87f203343871d03_phong_material);
+	scene.add(mesh);
+	});
+	shpcf1d0a1a55944cfaa8cfb025650bceab_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcf1d0a1a55944cfaa8cfb025650bceab.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcf1d0a1a55944cfaa8cfb025650bceab_phong_material);
+	scene.add(mesh);
+	});
+	shp7ba283ea5fa942cf95bcf2fe8a4a982e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7ba283ea5fa942cf95bcf2fe8a4a982e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7ba283ea5fa942cf95bcf2fe8a4a982e_phong_material);
+	scene.add(mesh);
+	});
+	shp9694c00f81694fe78717bd0d7ddc84fd_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9694c00f81694fe78717bd0d7ddc84fd.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9694c00f81694fe78717bd0d7ddc84fd_phong_material);
+	scene.add(mesh);
+	});
+	shp3a98e560600a46f597cfc37ffa58f714_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3a98e560600a46f597cfc37ffa58f714.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3a98e560600a46f597cfc37ffa58f714_phong_material);
+	scene.add(mesh);
+	});
+	shp5a4d8aec5aa442ee986800b44090ba44_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5a4d8aec5aa442ee986800b44090ba44.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5a4d8aec5aa442ee986800b44090ba44_phong_material);
+	scene.add(mesh);
+	});
+	shp9ed9e08644ce410db08eced22d86e7d3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9ed9e08644ce410db08eced22d86e7d3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9ed9e08644ce410db08eced22d86e7d3_phong_material);
+	scene.add(mesh);
+	});
+	shp33e550d571514234931808419034bd08_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp33e550d571514234931808419034bd08.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp33e550d571514234931808419034bd08_phong_material);
+	scene.add(mesh);
+	});
+	shp7aee327d576c4f8594303a945bd1b949_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7aee327d576c4f8594303a945bd1b949.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7aee327d576c4f8594303a945bd1b949_phong_material);
+	scene.add(mesh);
+	});
+	shp166015a97f964a48a3e419f09e89e41a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp166015a97f964a48a3e419f09e89e41a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp166015a97f964a48a3e419f09e89e41a_phong_material);
+	scene.add(mesh);
+	});
+	shp78dd9d58b30d4ef896c88810c385ec36_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp78dd9d58b30d4ef896c88810c385ec36.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp78dd9d58b30d4ef896c88810c385ec36_phong_material);
+	scene.add(mesh);
+	});
+	shp0d17d51cb8164df5b73e962f33d2fb83_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0d17d51cb8164df5b73e962f33d2fb83.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0d17d51cb8164df5b73e962f33d2fb83_phong_material);
+	scene.add(mesh);
+	});
+	shp957c209d7d4d4c6b9a903774b8bc5f8a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp957c209d7d4d4c6b9a903774b8bc5f8a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp957c209d7d4d4c6b9a903774b8bc5f8a_phong_material);
+	scene.add(mesh);
+	});
+	shp9d1b19902a9d45d09cfc9f4b09513cf9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9d1b19902a9d45d09cfc9f4b09513cf9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9d1b19902a9d45d09cfc9f4b09513cf9_phong_material);
+	scene.add(mesh);
+	});
+	shpba7012cf5a374e3db8ca0577b3814521_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpba7012cf5a374e3db8ca0577b3814521.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpba7012cf5a374e3db8ca0577b3814521_phong_material);
+	scene.add(mesh);
+	});
+	shpc374c8d18a0144709ff82352308cb94d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc374c8d18a0144709ff82352308cb94d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc374c8d18a0144709ff82352308cb94d_phong_material);
+	scene.add(mesh);
+	});
+	shp6a76da61b7204f3eb6a0d51307e34b13_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6a76da61b7204f3eb6a0d51307e34b13.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6a76da61b7204f3eb6a0d51307e34b13_phong_material);
+	scene.add(mesh);
+	});
+	shpd0c48a4cc63446aea318ff7ff85efe81_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd0c48a4cc63446aea318ff7ff85efe81.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd0c48a4cc63446aea318ff7ff85efe81_phong_material);
+	scene.add(mesh);
+	});
+	shp0a9a9188161a4563a205caa3dd49d9d5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0a9a9188161a4563a205caa3dd49d9d5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0a9a9188161a4563a205caa3dd49d9d5_phong_material);
+	scene.add(mesh);
+	});
+	shp54d7895b41dd4ac582d522740a6ce9fc_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp54d7895b41dd4ac582d522740a6ce9fc.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp54d7895b41dd4ac582d522740a6ce9fc_phong_material);
+	scene.add(mesh);
+	});
+	shpaf527d879d1e42ba93d73f59115626f3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpaf527d879d1e42ba93d73f59115626f3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpaf527d879d1e42ba93d73f59115626f3_phong_material);
+	scene.add(mesh);
+	});
+	shpceb377d63c5147e189897da394d2c033_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpceb377d63c5147e189897da394d2c033.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpceb377d63c5147e189897da394d2c033_phong_material);
+	scene.add(mesh);
+	});
+	shp14b67314a06a405da25a0cb6db027da1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp14b67314a06a405da25a0cb6db027da1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp14b67314a06a405da25a0cb6db027da1_phong_material);
+	scene.add(mesh);
+	});
+	shpc66ca5ab93514f0a981a7f80e9e63a86_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc66ca5ab93514f0a981a7f80e9e63a86.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc66ca5ab93514f0a981a7f80e9e63a86_phong_material);
+	scene.add(mesh);
+	});
+	shp8bdcf5c00fb249779ee0ff04d6f99416_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8bdcf5c00fb249779ee0ff04d6f99416.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8bdcf5c00fb249779ee0ff04d6f99416_phong_material);
+	scene.add(mesh);
+	});
+	shp04cb22fa922742c086969c20c1ef6b5b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp04cb22fa922742c086969c20c1ef6b5b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp04cb22fa922742c086969c20c1ef6b5b_phong_material);
+	scene.add(mesh);
+	});
+	shp4b88c96cb9cf4339b8702e91bca16488_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4b88c96cb9cf4339b8702e91bca16488.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4b88c96cb9cf4339b8702e91bca16488_phong_material);
+	scene.add(mesh);
+	});
+	shpf7d3852aa0154a048c5712aaa8d68591_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf7d3852aa0154a048c5712aaa8d68591.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf7d3852aa0154a048c5712aaa8d68591_phong_material);
+	scene.add(mesh);
+	});
+	shp0e20fce1cb524ee18ecc63be7d4c6045_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0e20fce1cb524ee18ecc63be7d4c6045.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0e20fce1cb524ee18ecc63be7d4c6045_phong_material);
+	scene.add(mesh);
+	});
+	shp679f7e24d74545b79779f27a84ffaf6a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp679f7e24d74545b79779f27a84ffaf6a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp679f7e24d74545b79779f27a84ffaf6a_phong_material);
+	scene.add(mesh);
+	});
+	shpadb3406bbe31407a9fbb4764a3d34b93_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpadb3406bbe31407a9fbb4764a3d34b93.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpadb3406bbe31407a9fbb4764a3d34b93_phong_material);
+	scene.add(mesh);
+	});
+	shp7861d05faa8f4181ad79427308e76ce7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7861d05faa8f4181ad79427308e76ce7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7861d05faa8f4181ad79427308e76ce7_phong_material);
+	scene.add(mesh);
+	});
+	shp9a0770aaeb6a4129bac833adbc2f2773_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9a0770aaeb6a4129bac833adbc2f2773.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9a0770aaeb6a4129bac833adbc2f2773_phong_material);
+	scene.add(mesh);
+	});
+	shpecca06d86c1b401aa1e9560d00fc4cb0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpecca06d86c1b401aa1e9560d00fc4cb0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpecca06d86c1b401aa1e9560d00fc4cb0_phong_material);
+	scene.add(mesh);
+	});
+	shp13d8412200a944a59372bac9ae1c157f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp13d8412200a944a59372bac9ae1c157f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp13d8412200a944a59372bac9ae1c157f_phong_material);
+	scene.add(mesh);
+	});
+	shp4e1bb0c90f8945088a161d106347032d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4e1bb0c90f8945088a161d106347032d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4e1bb0c90f8945088a161d106347032d_phong_material);
+	scene.add(mesh);
+	});
+	shp7b3aede280e04a98be8116ce21cf577f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7b3aede280e04a98be8116ce21cf577f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7b3aede280e04a98be8116ce21cf577f_phong_material);
+	scene.add(mesh);
+	});
+	shpfd42812807834349b48db198eefb2521_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpfd42812807834349b48db198eefb2521.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpfd42812807834349b48db198eefb2521_phong_material);
+	scene.add(mesh);
+	});
+	shpdaa7000e7f1642e8846553607e363fa5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdaa7000e7f1642e8846553607e363fa5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdaa7000e7f1642e8846553607e363fa5_phong_material);
+	scene.add(mesh);
+	});
+	shp241b4fb1245143af99cf537a5a4e6b3e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp241b4fb1245143af99cf537a5a4e6b3e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp241b4fb1245143af99cf537a5a4e6b3e_phong_material);
+	scene.add(mesh);
+	});
+	shp030e83b3ad5546ca9f6e4a077e849901_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp030e83b3ad5546ca9f6e4a077e849901.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp030e83b3ad5546ca9f6e4a077e849901_phong_material);
+	scene.add(mesh);
+	});
+	shpbc8b4848e07e4ce3843f633e21d1c5a6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbc8b4848e07e4ce3843f633e21d1c5a6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbc8b4848e07e4ce3843f633e21d1c5a6_phong_material);
+	scene.add(mesh);
+	});
+	shp608b726fbbad4c8680cf7d3729c219a2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp608b726fbbad4c8680cf7d3729c219a2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp608b726fbbad4c8680cf7d3729c219a2_phong_material);
+	scene.add(mesh);
+	});
+	shpb1e6d26cfb484aafa92fc39930bbef38_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb1e6d26cfb484aafa92fc39930bbef38.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb1e6d26cfb484aafa92fc39930bbef38_phong_material);
+	scene.add(mesh);
+	});
+	shpe1f05c58e6e14653a0322de469e8c546_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe1f05c58e6e14653a0322de469e8c546.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe1f05c58e6e14653a0322de469e8c546_phong_material);
+	scene.add(mesh);
+	});
+	shp34200b87bf57494284215b2d14eccf6e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp34200b87bf57494284215b2d14eccf6e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp34200b87bf57494284215b2d14eccf6e_phong_material);
+	scene.add(mesh);
+	});
+	shp9eb493cc865f4c349c2baea1feb37581_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9eb493cc865f4c349c2baea1feb37581.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9eb493cc865f4c349c2baea1feb37581_phong_material);
+	scene.add(mesh);
+	});
+	shpdfb741b112a643a49ecfff90a6a05dcb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdfb741b112a643a49ecfff90a6a05dcb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdfb741b112a643a49ecfff90a6a05dcb_phong_material);
+	scene.add(mesh);
+	});
+	shp08b837600ccd42f484081f45a07dd10c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp08b837600ccd42f484081f45a07dd10c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp08b837600ccd42f484081f45a07dd10c_phong_material);
+	scene.add(mesh);
+	});
+	shp3a23e89c4a0e467f9697919aa7a941f8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3a23e89c4a0e467f9697919aa7a941f8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3a23e89c4a0e467f9697919aa7a941f8_phong_material);
+	scene.add(mesh);
+	});
+	shp870ab74f8ac74ae399e8235308d14e5d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp870ab74f8ac74ae399e8235308d14e5d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp870ab74f8ac74ae399e8235308d14e5d_phong_material);
+	scene.add(mesh);
+	});
+	shp7bd0f19816194e3e9a098893227d4e02_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7bd0f19816194e3e9a098893227d4e02.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7bd0f19816194e3e9a098893227d4e02_phong_material);
+	scene.add(mesh);
+	});
+	shpde44d88c829b4b8d89140de15fed53ab_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpde44d88c829b4b8d89140de15fed53ab.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpde44d88c829b4b8d89140de15fed53ab_phong_material);
+	scene.add(mesh);
+	});
+	shpdba25549fa9d49269d0c66dec704bf78_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdba25549fa9d49269d0c66dec704bf78.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdba25549fa9d49269d0c66dec704bf78_phong_material);
+	scene.add(mesh);
+	});
+	shp245dab72b85c44fe899d5107c551945c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp245dab72b85c44fe899d5107c551945c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp245dab72b85c44fe899d5107c551945c_phong_material);
+	scene.add(mesh);
+	});
+	shp93b184f033924840baef56bb57f5c9f5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp93b184f033924840baef56bb57f5c9f5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp93b184f033924840baef56bb57f5c9f5_phong_material);
+	scene.add(mesh);
+	});
+	shp83ea34140e4149a6b71fa4cdb99c3bae_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp83ea34140e4149a6b71fa4cdb99c3bae.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp83ea34140e4149a6b71fa4cdb99c3bae_phong_material);
+	scene.add(mesh);
+	});
+	shpf4540a849065496797ad2717acc3d978_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf4540a849065496797ad2717acc3d978.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf4540a849065496797ad2717acc3d978_phong_material);
+	scene.add(mesh);
+	});
+	shp31f54f708fd74c6ebe052119fb48cc6d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp31f54f708fd74c6ebe052119fb48cc6d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp31f54f708fd74c6ebe052119fb48cc6d_phong_material);
+	scene.add(mesh);
+	});
+	shp230ab9df124e470ca2fa03d9add004d4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp230ab9df124e470ca2fa03d9add004d4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp230ab9df124e470ca2fa03d9add004d4_phong_material);
+	scene.add(mesh);
+	});
+	shp6bcdc494945944948a96ad8cacc0ed78_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6bcdc494945944948a96ad8cacc0ed78.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6bcdc494945944948a96ad8cacc0ed78_phong_material);
+	scene.add(mesh);
+	});
+	shp4d99e1db09f44ca58e10deff3f615298_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4d99e1db09f44ca58e10deff3f615298.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4d99e1db09f44ca58e10deff3f615298_phong_material);
+	scene.add(mesh);
+	});
+	shp725f1dd8d56e4c7f9838051dda7dcbd2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp725f1dd8d56e4c7f9838051dda7dcbd2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp725f1dd8d56e4c7f9838051dda7dcbd2_phong_material);
+	scene.add(mesh);
+	});
+	shp0270de6400b54d138ef7fc3047cbf2de_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0270de6400b54d138ef7fc3047cbf2de.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0270de6400b54d138ef7fc3047cbf2de_phong_material);
+	scene.add(mesh);
+	});
+	shpde5b533a7dd44e2ebd9816f4d97aaf28_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpde5b533a7dd44e2ebd9816f4d97aaf28.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpde5b533a7dd44e2ebd9816f4d97aaf28_phong_material);
+	scene.add(mesh);
+	});
+	shp0f6c7ee0c04545b2a1d6849c3aaee662_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0f6c7ee0c04545b2a1d6849c3aaee662.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0f6c7ee0c04545b2a1d6849c3aaee662_phong_material);
+	scene.add(mesh);
+	});
+	shp6e9161b6d0e541d2a12197d9b98f5c5b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6e9161b6d0e541d2a12197d9b98f5c5b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6e9161b6d0e541d2a12197d9b98f5c5b_phong_material);
+	scene.add(mesh);
+	});
+	shpc83008658dc646b4be0fa3d535754343_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc83008658dc646b4be0fa3d535754343.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc83008658dc646b4be0fa3d535754343_phong_material);
+	scene.add(mesh);
+	});
+	shp6039d87a232842a7a0e5072dc581f31d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6039d87a232842a7a0e5072dc581f31d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6039d87a232842a7a0e5072dc581f31d_phong_material);
+	scene.add(mesh);
+	});
+	shpdf8cd7ede6174f40a2449439e7770a64_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdf8cd7ede6174f40a2449439e7770a64.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdf8cd7ede6174f40a2449439e7770a64_phong_material);
+	scene.add(mesh);
+	});
+	shpe51edf22f0154b3a864776c537e6df12_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe51edf22f0154b3a864776c537e6df12.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe51edf22f0154b3a864776c537e6df12_phong_material);
+	scene.add(mesh);
+	});
+	shpbfdaa956724f4c96ade2aaf2a70da277_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbfdaa956724f4c96ade2aaf2a70da277.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbfdaa956724f4c96ade2aaf2a70da277_phong_material);
+	scene.add(mesh);
+	});
+	shp47783d741a1e43b9bccea59ed5c35163_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp47783d741a1e43b9bccea59ed5c35163.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp47783d741a1e43b9bccea59ed5c35163_phong_material);
+	scene.add(mesh);
+	});
+	shp7b83e5ec180240d69d24dda026db66c6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7b83e5ec180240d69d24dda026db66c6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7b83e5ec180240d69d24dda026db66c6_phong_material);
+	scene.add(mesh);
+	});
+	shp6f1c366d4c0a4f21be59176c8155378d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6f1c366d4c0a4f21be59176c8155378d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6f1c366d4c0a4f21be59176c8155378d_phong_material);
+	scene.add(mesh);
+	});
+	shpbbf658cfb66e4961a54222aa83648f99_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbbf658cfb66e4961a54222aa83648f99.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbbf658cfb66e4961a54222aa83648f99_phong_material);
+	scene.add(mesh);
+	});
+	shp8a2d2736733d4f96a29fc3bc3715132a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8a2d2736733d4f96a29fc3bc3715132a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8a2d2736733d4f96a29fc3bc3715132a_phong_material);
+	scene.add(mesh);
+	});
+	shpd3a15e706fb64209ad0f69dacb4979de_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd3a15e706fb64209ad0f69dacb4979de.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd3a15e706fb64209ad0f69dacb4979de_phong_material);
+	scene.add(mesh);
+	});
+	shpc276c834769e4361af901dfebfe98e0f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc276c834769e4361af901dfebfe98e0f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc276c834769e4361af901dfebfe98e0f_phong_material);
+	scene.add(mesh);
+	});
+	shp795c52b6850c48dca91bb626aa226535_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp795c52b6850c48dca91bb626aa226535.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp795c52b6850c48dca91bb626aa226535_phong_material);
+	scene.add(mesh);
+	});
+	shp195cb98d0e7a40b78da58891c0475d2a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp195cb98d0e7a40b78da58891c0475d2a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp195cb98d0e7a40b78da58891c0475d2a_phong_material);
+	scene.add(mesh);
+	});
+	shp14db8526266747559a72f0705bb08849_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp14db8526266747559a72f0705bb08849.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp14db8526266747559a72f0705bb08849_phong_material);
+	scene.add(mesh);
+	});
+	shpb38e704e1baa46de832766c86f3227f2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb38e704e1baa46de832766c86f3227f2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb38e704e1baa46de832766c86f3227f2_phong_material);
+	scene.add(mesh);
+	});
+	shp896f1373305c47d5a4be6b1caf5ff725_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp896f1373305c47d5a4be6b1caf5ff725.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp896f1373305c47d5a4be6b1caf5ff725_phong_material);
+	scene.add(mesh);
+	});
+	shp3da9d5c6b7b04e4aae8d915002f39b93_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3da9d5c6b7b04e4aae8d915002f39b93.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3da9d5c6b7b04e4aae8d915002f39b93_phong_material);
+	scene.add(mesh);
+	});
+	shp3e7d7095678b40bc96cfba5717fb9685_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3e7d7095678b40bc96cfba5717fb9685.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3e7d7095678b40bc96cfba5717fb9685_phong_material);
+	scene.add(mesh);
+	});
+	shp0f4306f8ef5a462792b15c7f249ed8b3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0f4306f8ef5a462792b15c7f249ed8b3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0f4306f8ef5a462792b15c7f249ed8b3_phong_material);
+	scene.add(mesh);
+	});
+	shp1b598b11128446678579a737058b7f1d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1b598b11128446678579a737058b7f1d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1b598b11128446678579a737058b7f1d_phong_material);
+	scene.add(mesh);
+	});
+	shpe216195440404013a0f847f50dfaa9d5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe216195440404013a0f847f50dfaa9d5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe216195440404013a0f847f50dfaa9d5_phong_material);
+	scene.add(mesh);
+	});
+	shp02ca7d0d09e74227aabb1f7db5f33d53_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp02ca7d0d09e74227aabb1f7db5f33d53.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp02ca7d0d09e74227aabb1f7db5f33d53_phong_material);
+	scene.add(mesh);
+	});
+	shp8365bb8f76774dc887e778db3868f723_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8365bb8f76774dc887e778db3868f723.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8365bb8f76774dc887e778db3868f723_phong_material);
+	scene.add(mesh);
+	});
+	shpd9a2da95737d419e966605fae4a25722_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd9a2da95737d419e966605fae4a25722.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd9a2da95737d419e966605fae4a25722_phong_material);
+	scene.add(mesh);
+	});
+	shp8ba0bd8778214b73ab109b1018f682ef_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8ba0bd8778214b73ab109b1018f682ef.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8ba0bd8778214b73ab109b1018f682ef_phong_material);
+	scene.add(mesh);
+	});
+	shp4963e470728e457caf235bbbce926c1b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4963e470728e457caf235bbbce926c1b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4963e470728e457caf235bbbce926c1b_phong_material);
+	scene.add(mesh);
+	});
+	shp172f7cc864f347c98de1dac50cf12441_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp172f7cc864f347c98de1dac50cf12441.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp172f7cc864f347c98de1dac50cf12441_phong_material);
+	scene.add(mesh);
+	});
+	shpb11f280a7a15474483d6eaadab197604_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb11f280a7a15474483d6eaadab197604.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb11f280a7a15474483d6eaadab197604_phong_material);
+	scene.add(mesh);
+	});
+	shpbd90de596e1b4a00a015355ddafab8c8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbd90de596e1b4a00a015355ddafab8c8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbd90de596e1b4a00a015355ddafab8c8_phong_material);
+	scene.add(mesh);
+	});
+	shp411ab1e23a7f492ea35f094d899f0ca0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp411ab1e23a7f492ea35f094d899f0ca0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp411ab1e23a7f492ea35f094d899f0ca0_phong_material);
+	scene.add(mesh);
+	});
+	shp39b6a495746a4613ba2be0b3d3724836_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp39b6a495746a4613ba2be0b3d3724836.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp39b6a495746a4613ba2be0b3d3724836_phong_material);
+	scene.add(mesh);
+	});
+	shp3157e13ed4cc49b0974a4863abd213b0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3157e13ed4cc49b0974a4863abd213b0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3157e13ed4cc49b0974a4863abd213b0_phong_material);
+	scene.add(mesh);
+	});
+	shp6e2a293b375a45dfb3d632799abd7199_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6e2a293b375a45dfb3d632799abd7199.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6e2a293b375a45dfb3d632799abd7199_phong_material);
+	scene.add(mesh);
+	});
+	shp4ec3e3eb57384763b1ffe5687b94590d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4ec3e3eb57384763b1ffe5687b94590d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4ec3e3eb57384763b1ffe5687b94590d_phong_material);
+	scene.add(mesh);
+	});
+	shp0f1064cc8a104c8c805580f0d352ab9d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0f1064cc8a104c8c805580f0d352ab9d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0f1064cc8a104c8c805580f0d352ab9d_phong_material);
+	scene.add(mesh);
+	});
+	shp37e4464fceb24c9d93d5870fe596e8b6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp37e4464fceb24c9d93d5870fe596e8b6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp37e4464fceb24c9d93d5870fe596e8b6_phong_material);
+	scene.add(mesh);
+	});
+	shpb0687166b5744028b8060b4709b20939_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb0687166b5744028b8060b4709b20939.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb0687166b5744028b8060b4709b20939_phong_material);
+	scene.add(mesh);
+	});
+	shpfd65f016b45d4d68b8f5519309b4ceba_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpfd65f016b45d4d68b8f5519309b4ceba.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpfd65f016b45d4d68b8f5519309b4ceba_phong_material);
+	scene.add(mesh);
+	});
+	shpbf6d1d714c564ca6a9d44fa3c28e2fed_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbf6d1d714c564ca6a9d44fa3c28e2fed.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbf6d1d714c564ca6a9d44fa3c28e2fed_phong_material);
+	scene.add(mesh);
+	});
+	shpa751f2772bad4cfcb913fcac5fe791b1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa751f2772bad4cfcb913fcac5fe791b1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa751f2772bad4cfcb913fcac5fe791b1_phong_material);
+	scene.add(mesh);
+	});
+	shp62a422135a5144d3b39e52dfbfef72ce_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp62a422135a5144d3b39e52dfbfef72ce.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp62a422135a5144d3b39e52dfbfef72ce_phong_material);
+	scene.add(mesh);
+	});
+	shpd6b288accb5f497ea07ea9c6e4a6af4f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd6b288accb5f497ea07ea9c6e4a6af4f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd6b288accb5f497ea07ea9c6e4a6af4f_phong_material);
+	scene.add(mesh);
+	});
+	shpf498b0bbc73f4f9ca90adc5dbe917d9f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf498b0bbc73f4f9ca90adc5dbe917d9f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf498b0bbc73f4f9ca90adc5dbe917d9f_phong_material);
+	scene.add(mesh);
+	});
+	shp7e4d035028df448f81031ac40afe9d48_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7e4d035028df448f81031ac40afe9d48.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7e4d035028df448f81031ac40afe9d48_phong_material);
+	scene.add(mesh);
+	});
+	shp0f1cbd991baf4128b094f6213a698274_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0f1cbd991baf4128b094f6213a698274.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0f1cbd991baf4128b094f6213a698274_phong_material);
+	scene.add(mesh);
+	});
+	shp9c842558f9e3443582ea811e05e7191d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9c842558f9e3443582ea811e05e7191d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9c842558f9e3443582ea811e05e7191d_phong_material);
+	scene.add(mesh);
+	});
+	shp78c5dd3c57cd43409f15ed0ce7c41e33_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp78c5dd3c57cd43409f15ed0ce7c41e33.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp78c5dd3c57cd43409f15ed0ce7c41e33_phong_material);
+	scene.add(mesh);
+	});
+	shp9aebb8f2e46044669394f9ee06559110_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9aebb8f2e46044669394f9ee06559110.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9aebb8f2e46044669394f9ee06559110_phong_material);
+	scene.add(mesh);
+	});
+	shpd0617b9eab184e0a941d3dd6dd2f5a32_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd0617b9eab184e0a941d3dd6dd2f5a32.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd0617b9eab184e0a941d3dd6dd2f5a32_phong_material);
+	scene.add(mesh);
+	});
+	shp50040fe677474b3f9b874ab5f000d6aa_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp50040fe677474b3f9b874ab5f000d6aa.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp50040fe677474b3f9b874ab5f000d6aa_phong_material);
+	scene.add(mesh);
+	});
+	shp4cf8dc67a18b481499db793be115ec9f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4cf8dc67a18b481499db793be115ec9f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4cf8dc67a18b481499db793be115ec9f_phong_material);
+	scene.add(mesh);
+	});
+	shpdbda4e829df948fe95f8b839cc40a95c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdbda4e829df948fe95f8b839cc40a95c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdbda4e829df948fe95f8b839cc40a95c_phong_material);
+	scene.add(mesh);
+	});
+	shp8a6dc6d949a941178e9d7a7663b2fe1b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8a6dc6d949a941178e9d7a7663b2fe1b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8a6dc6d949a941178e9d7a7663b2fe1b_phong_material);
+	scene.add(mesh);
+	});
+	shp474d2bec29d04a6cbbbd17b147bb7d67_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp474d2bec29d04a6cbbbd17b147bb7d67.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp474d2bec29d04a6cbbbd17b147bb7d67_phong_material);
+	scene.add(mesh);
+	});
+	shpee741fbaa99e4429a297df0fe51cb318_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpee741fbaa99e4429a297df0fe51cb318.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpee741fbaa99e4429a297df0fe51cb318_phong_material);
+	scene.add(mesh);
+	});
+	shp0c4877de9c3042bf84f8d59449dbe34b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0c4877de9c3042bf84f8d59449dbe34b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0c4877de9c3042bf84f8d59449dbe34b_phong_material);
+	scene.add(mesh);
+	});
+	shpce323511867143ada11121dcc6659468_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpce323511867143ada11121dcc6659468.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpce323511867143ada11121dcc6659468_phong_material);
+	scene.add(mesh);
+	});
+	shp7ddaaf624a48424082d81fc4af2439e7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7ddaaf624a48424082d81fc4af2439e7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7ddaaf624a48424082d81fc4af2439e7_phong_material);
+	scene.add(mesh);
+	});
+	shp24cabb19570f41c0bc635165a918939d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp24cabb19570f41c0bc635165a918939d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp24cabb19570f41c0bc635165a918939d_phong_material);
+	scene.add(mesh);
+	});
+	shp427aa504421a41bcaab7f05c063d06ff_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp427aa504421a41bcaab7f05c063d06ff.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp427aa504421a41bcaab7f05c063d06ff_phong_material);
+	scene.add(mesh);
+	});
+	shpe000627fe7ac422ea111e489b7f6acf9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe000627fe7ac422ea111e489b7f6acf9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe000627fe7ac422ea111e489b7f6acf9_phong_material);
+	scene.add(mesh);
+	});
+	shpc959008fbed845649a0c60fc091d7a5d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc959008fbed845649a0c60fc091d7a5d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc959008fbed845649a0c60fc091d7a5d_phong_material);
+	scene.add(mesh);
+	});
+	shp6f709a8d0e1b4253a1093260bd8968b5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6f709a8d0e1b4253a1093260bd8968b5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6f709a8d0e1b4253a1093260bd8968b5_phong_material);
+	scene.add(mesh);
+	});
+	shpd50a789b83674272bd0f54115463e6ac_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd50a789b83674272bd0f54115463e6ac.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd50a789b83674272bd0f54115463e6ac_phong_material);
+	scene.add(mesh);
+	});
+	shpcb4c103d12954b8c91de2b9a59b43057_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcb4c103d12954b8c91de2b9a59b43057.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcb4c103d12954b8c91de2b9a59b43057_phong_material);
+	scene.add(mesh);
+	});
+	shp7c46da27f9054a44a861324898e4a37f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7c46da27f9054a44a861324898e4a37f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7c46da27f9054a44a861324898e4a37f_phong_material);
+	scene.add(mesh);
+	});
+	shp72912b3dbbae4e36a3b62d79813555c9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp72912b3dbbae4e36a3b62d79813555c9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp72912b3dbbae4e36a3b62d79813555c9_phong_material);
+	scene.add(mesh);
+	});
+	shp2818bb6750f44ba4af125d975f6e2628_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2818bb6750f44ba4af125d975f6e2628.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2818bb6750f44ba4af125d975f6e2628_phong_material);
+	scene.add(mesh);
+	});
+	shpc398f9961007453cbd55577995db63d0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc398f9961007453cbd55577995db63d0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc398f9961007453cbd55577995db63d0_phong_material);
+	scene.add(mesh);
+	});
+	shpea9139ac0d0d46b2bf6b83eddb482f8d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpea9139ac0d0d46b2bf6b83eddb482f8d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpea9139ac0d0d46b2bf6b83eddb482f8d_phong_material);
+	scene.add(mesh);
+	});
+	shp312782a95bf7462196ae955860ac511e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp312782a95bf7462196ae955860ac511e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp312782a95bf7462196ae955860ac511e_phong_material);
+	scene.add(mesh);
+	});
+	shp7b8e6b331fa34bebb01058a02cf9fcd9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7b8e6b331fa34bebb01058a02cf9fcd9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7b8e6b331fa34bebb01058a02cf9fcd9_phong_material);
+	scene.add(mesh);
+	});
+	shpa6b67693fd984207b1bfb4b8c180fc63_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa6b67693fd984207b1bfb4b8c180fc63.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa6b67693fd984207b1bfb4b8c180fc63_phong_material);
+	scene.add(mesh);
+	});
+	shpbd22c017291e4d84a3a624b517b118e4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbd22c017291e4d84a3a624b517b118e4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbd22c017291e4d84a3a624b517b118e4_phong_material);
+	scene.add(mesh);
+	});
+	shp20e5083ee4254cc3b003f3d3d1065656_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp20e5083ee4254cc3b003f3d3d1065656.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp20e5083ee4254cc3b003f3d3d1065656_phong_material);
+	scene.add(mesh);
+	});
+	shp4d1155afab434798b970ecc7874d4a6c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4d1155afab434798b970ecc7874d4a6c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4d1155afab434798b970ecc7874d4a6c_phong_material);
+	scene.add(mesh);
+	});
+	shp945ecc0342b340f2adbc1f202a9ab9e4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp945ecc0342b340f2adbc1f202a9ab9e4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp945ecc0342b340f2adbc1f202a9ab9e4_phong_material);
+	scene.add(mesh);
+	});
+	shpfcb32e889ffc483d8a86dee5573ed724_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpfcb32e889ffc483d8a86dee5573ed724.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpfcb32e889ffc483d8a86dee5573ed724_phong_material);
+	scene.add(mesh);
+	});
+	shp3284190cae9a4b488693c00bea793f87_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3284190cae9a4b488693c00bea793f87.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3284190cae9a4b488693c00bea793f87_phong_material);
+	scene.add(mesh);
+	});
+	shpcd1bc8b5d6be4707b2dc2b0b0b90f581_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcd1bc8b5d6be4707b2dc2b0b0b90f581.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcd1bc8b5d6be4707b2dc2b0b0b90f581_phong_material);
+	scene.add(mesh);
+	});
+	shp7e5bf64ef7814152ad74044fcd91aae9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7e5bf64ef7814152ad74044fcd91aae9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7e5bf64ef7814152ad74044fcd91aae9_phong_material);
+	scene.add(mesh);
+	});
+	shp529f6c87b81343838c337e83e8e803d5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp529f6c87b81343838c337e83e8e803d5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp529f6c87b81343838c337e83e8e803d5_phong_material);
+	scene.add(mesh);
+	});
+	shp8b0b3eee7cf0474cbe5cd15b58d5ccd4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8b0b3eee7cf0474cbe5cd15b58d5ccd4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8b0b3eee7cf0474cbe5cd15b58d5ccd4_phong_material);
+	scene.add(mesh);
+	});
+	shp064c2ba548984966811f002cd793bb76_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp064c2ba548984966811f002cd793bb76.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp064c2ba548984966811f002cd793bb76_phong_material);
+	scene.add(mesh);
+	});
+	shp3b31ffdc3e1647e493645aa58dafad5c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3b31ffdc3e1647e493645aa58dafad5c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3b31ffdc3e1647e493645aa58dafad5c_phong_material);
+	scene.add(mesh);
+	});
+	shp39ad43cdad2b497c9a6acfef21cdbc3f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp39ad43cdad2b497c9a6acfef21cdbc3f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp39ad43cdad2b497c9a6acfef21cdbc3f_phong_material);
+	scene.add(mesh);
+	});
+	shpd2bfafb5b3a640e797497b8649975c31_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd2bfafb5b3a640e797497b8649975c31.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd2bfafb5b3a640e797497b8649975c31_phong_material);
+	scene.add(mesh);
+	});
+	shp5c285d123801484a9e0c90b7eba98627_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5c285d123801484a9e0c90b7eba98627.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5c285d123801484a9e0c90b7eba98627_phong_material);
+	scene.add(mesh);
+	});
+	shpbabb135e297446de9c4a74243eb294ee_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbabb135e297446de9c4a74243eb294ee.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbabb135e297446de9c4a74243eb294ee_phong_material);
+	scene.add(mesh);
+	});
+	shp9c652a3dd1c6468cbf8a633ad9021948_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9c652a3dd1c6468cbf8a633ad9021948.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9c652a3dd1c6468cbf8a633ad9021948_phong_material);
+	scene.add(mesh);
+	});
+	shp470d5586f4f74294aac6eb191bc8771c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp470d5586f4f74294aac6eb191bc8771c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp470d5586f4f74294aac6eb191bc8771c_phong_material);
+	scene.add(mesh);
+	});
+	shp9f14687ee638411b9bdf86b88c9d0aa2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9f14687ee638411b9bdf86b88c9d0aa2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9f14687ee638411b9bdf86b88c9d0aa2_phong_material);
+	scene.add(mesh);
+	});
+	shp1cb14eabba4846c69055de55f2145c74_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1cb14eabba4846c69055de55f2145c74.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1cb14eabba4846c69055de55f2145c74_phong_material);
+	scene.add(mesh);
+	});
+	shp4fb385c97f5742708812656383de54c7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4fb385c97f5742708812656383de54c7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4fb385c97f5742708812656383de54c7_phong_material);
+	scene.add(mesh);
+	});
+	shp74cb789bb5eb4438b869ac23960f3ebb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp74cb789bb5eb4438b869ac23960f3ebb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp74cb789bb5eb4438b869ac23960f3ebb_phong_material);
+	scene.add(mesh);
+	});
+	shpe25b48bb6b044e82b2b59f2088df238c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe25b48bb6b044e82b2b59f2088df238c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe25b48bb6b044e82b2b59f2088df238c_phong_material);
+	scene.add(mesh);
+	});
+	shp4eb0bdbb419546bcb4dfaac7406b1222_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4eb0bdbb419546bcb4dfaac7406b1222.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4eb0bdbb419546bcb4dfaac7406b1222_phong_material);
+	scene.add(mesh);
+	});
+	shp938fd33b249d4b9e9492ecb028550302_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp938fd33b249d4b9e9492ecb028550302.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp938fd33b249d4b9e9492ecb028550302_phong_material);
+	scene.add(mesh);
+	});
+	shp96fc310e81fd4fc9a854028593aa30bd_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp96fc310e81fd4fc9a854028593aa30bd.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp96fc310e81fd4fc9a854028593aa30bd_phong_material);
+	scene.add(mesh);
+	});
+	shpde44e044a1634f528630e6b86215618f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpde44e044a1634f528630e6b86215618f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpde44e044a1634f528630e6b86215618f_phong_material);
+	scene.add(mesh);
+	});
+	shp7ce0eedbc3b64836ba3a94338d71bdb5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7ce0eedbc3b64836ba3a94338d71bdb5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7ce0eedbc3b64836ba3a94338d71bdb5_phong_material);
+	scene.add(mesh);
+	});
+	shpc99e307aa584430c982ad79333fed555_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc99e307aa584430c982ad79333fed555.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc99e307aa584430c982ad79333fed555_phong_material);
+	scene.add(mesh);
+	});
+	shpb3a81c5d29cd47708f2ea67d0a8cb5b7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb3a81c5d29cd47708f2ea67d0a8cb5b7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb3a81c5d29cd47708f2ea67d0a8cb5b7_phong_material);
+	scene.add(mesh);
+	});
+	shp60349972baa54a1e9dfd29df68cc602d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp60349972baa54a1e9dfd29df68cc602d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp60349972baa54a1e9dfd29df68cc602d_phong_material);
+	scene.add(mesh);
+	});
+	shp06c74a05e03941f08f8527205ce1e4bb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp06c74a05e03941f08f8527205ce1e4bb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp06c74a05e03941f08f8527205ce1e4bb_phong_material);
+	scene.add(mesh);
+	});
+	shpf8e627ea4c97479784833e9b4923985a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf8e627ea4c97479784833e9b4923985a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf8e627ea4c97479784833e9b4923985a_phong_material);
+	scene.add(mesh);
+	});
+	shp6da65454ab894d659b4b936b14656294_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6da65454ab894d659b4b936b14656294.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6da65454ab894d659b4b936b14656294_phong_material);
+	scene.add(mesh);
+	});
+	shp8b6094b0a0e2408180f619b1a721c781_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8b6094b0a0e2408180f619b1a721c781.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8b6094b0a0e2408180f619b1a721c781_phong_material);
+	scene.add(mesh);
+	});
+	shp81c8eb2e7dd94faea59b30452b903887_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp81c8eb2e7dd94faea59b30452b903887.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp81c8eb2e7dd94faea59b30452b903887_phong_material);
+	scene.add(mesh);
+	});
+	shp7ab75b60b3f54ce48012c4f9945ca37f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7ab75b60b3f54ce48012c4f9945ca37f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7ab75b60b3f54ce48012c4f9945ca37f_phong_material);
+	scene.add(mesh);
+	});
+	shpa7be9aae572b4f80a3912940acc16e65_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa7be9aae572b4f80a3912940acc16e65.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa7be9aae572b4f80a3912940acc16e65_phong_material);
+	scene.add(mesh);
+	});
+	shpd25768fc435940ec94ab72ec02df7dc7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd25768fc435940ec94ab72ec02df7dc7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd25768fc435940ec94ab72ec02df7dc7_phong_material);
+	scene.add(mesh);
+	});
+	shpcc0673eef5ba4c9fb2731c13fe68338e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcc0673eef5ba4c9fb2731c13fe68338e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcc0673eef5ba4c9fb2731c13fe68338e_phong_material);
+	scene.add(mesh);
+	});
+	shpe80aa7e8990a4202892842a5c99225d1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe80aa7e8990a4202892842a5c99225d1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe80aa7e8990a4202892842a5c99225d1_phong_material);
+	scene.add(mesh);
+	});
+	shp164a858104eb467db22a357472ffad2f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp164a858104eb467db22a357472ffad2f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp164a858104eb467db22a357472ffad2f_phong_material);
+	scene.add(mesh);
+	});
+	shp06822c91ed3c49f489dbfa7b2c99493c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp06822c91ed3c49f489dbfa7b2c99493c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp06822c91ed3c49f489dbfa7b2c99493c_phong_material);
+	scene.add(mesh);
+	});
+	shp46147494d0404ecb9f1087427a38aa8b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp46147494d0404ecb9f1087427a38aa8b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp46147494d0404ecb9f1087427a38aa8b_phong_material);
+	scene.add(mesh);
+	});
+	shp83e45e42b73e4336ae742a6a9712b8f5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp83e45e42b73e4336ae742a6a9712b8f5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp83e45e42b73e4336ae742a6a9712b8f5_phong_material);
+	scene.add(mesh);
+	});
+	shp4bbc73d700f140d99b7fbf8dc709fd2b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4bbc73d700f140d99b7fbf8dc709fd2b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4bbc73d700f140d99b7fbf8dc709fd2b_phong_material);
+	scene.add(mesh);
+	});
+	shpeecc8a2ce7764e4dbe1963cfdefd80c5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpeecc8a2ce7764e4dbe1963cfdefd80c5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpeecc8a2ce7764e4dbe1963cfdefd80c5_phong_material);
+	scene.add(mesh);
+	});
+	shpd2f1c00f8db34e15a6fe21438f0e11ba_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd2f1c00f8db34e15a6fe21438f0e11ba.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd2f1c00f8db34e15a6fe21438f0e11ba_phong_material);
+	scene.add(mesh);
+	});
+	shp297686437c0c4284a1145ccbb7691443_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp297686437c0c4284a1145ccbb7691443.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp297686437c0c4284a1145ccbb7691443_phong_material);
+	scene.add(mesh);
+	});
+	shp4865cb6b84b945309d83502b6ab4de48_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4865cb6b84b945309d83502b6ab4de48.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4865cb6b84b945309d83502b6ab4de48_phong_material);
+	scene.add(mesh);
+	});
+	shp61d98cfdabe94c9492de9f869a04b107_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp61d98cfdabe94c9492de9f869a04b107.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp61d98cfdabe94c9492de9f869a04b107_phong_material);
+	scene.add(mesh);
+	});
+	shp6ea5b375f2ce4bba83b33c6862929769_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6ea5b375f2ce4bba83b33c6862929769.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6ea5b375f2ce4bba83b33c6862929769_phong_material);
+	scene.add(mesh);
+	});
+	shp58d9a3f3c35f42a298f1b1deaf88af3d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp58d9a3f3c35f42a298f1b1deaf88af3d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp58d9a3f3c35f42a298f1b1deaf88af3d_phong_material);
+	scene.add(mesh);
+	});
+	shpd276437e8c4641089f86e6e71f7a0e52_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd276437e8c4641089f86e6e71f7a0e52.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd276437e8c4641089f86e6e71f7a0e52_phong_material);
+	scene.add(mesh);
+	});
+	shpd52034b87e674edc93171ce978dd4b72_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd52034b87e674edc93171ce978dd4b72.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd52034b87e674edc93171ce978dd4b72_phong_material);
+	scene.add(mesh);
+	});
+	shpf29d1afb35324989b62c9ee94630ad1b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf29d1afb35324989b62c9ee94630ad1b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf29d1afb35324989b62c9ee94630ad1b_phong_material);
+	scene.add(mesh);
+	});
+	shp568880191e984e0c9c29e788affd5043_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp568880191e984e0c9c29e788affd5043.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp568880191e984e0c9c29e788affd5043_phong_material);
+	scene.add(mesh);
+	});
+	shp1f33be0070264547885ff3700a2fd5cf_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1f33be0070264547885ff3700a2fd5cf.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1f33be0070264547885ff3700a2fd5cf_phong_material);
+	scene.add(mesh);
+	});
+	shpae91a30b5d5740979b05956a5c87e03e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpae91a30b5d5740979b05956a5c87e03e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpae91a30b5d5740979b05956a5c87e03e_phong_material);
+	scene.add(mesh);
+	});
+	shp94a2769d6cd34f7a88927a8633da8c6f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp94a2769d6cd34f7a88927a8633da8c6f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp94a2769d6cd34f7a88927a8633da8c6f_phong_material);
+	scene.add(mesh);
+	});
+	shp9c3032cf7b0844628b663a72ceda50cb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9c3032cf7b0844628b663a72ceda50cb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9c3032cf7b0844628b663a72ceda50cb_phong_material);
+	scene.add(mesh);
+	});
+	shp58c4109e5fe54e0eb7eedd232d033f5e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp58c4109e5fe54e0eb7eedd232d033f5e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp58c4109e5fe54e0eb7eedd232d033f5e_phong_material);
+	scene.add(mesh);
+	});
+	shpe9d0034693764226ac4ab2b4f347791f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe9d0034693764226ac4ab2b4f347791f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe9d0034693764226ac4ab2b4f347791f_phong_material);
+	scene.add(mesh);
+	});
+	shpee38c5cb83614d12b1ecb3f03a928e6d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpee38c5cb83614d12b1ecb3f03a928e6d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpee38c5cb83614d12b1ecb3f03a928e6d_phong_material);
+	scene.add(mesh);
+	});
+	shpd36092563b7546d3b131ace5a270508d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd36092563b7546d3b131ace5a270508d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd36092563b7546d3b131ace5a270508d_phong_material);
+	scene.add(mesh);
+	});
+	shp92a55edafb6840c985aadb9d2088c065_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp92a55edafb6840c985aadb9d2088c065.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp92a55edafb6840c985aadb9d2088c065_phong_material);
+	scene.add(mesh);
+	});
+	shpa4404651d0224ee88a735b3703389dc8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa4404651d0224ee88a735b3703389dc8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa4404651d0224ee88a735b3703389dc8_phong_material);
+	scene.add(mesh);
+	});
+	shpc731c048be594762aa1dede0bda3c963_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc731c048be594762aa1dede0bda3c963.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc731c048be594762aa1dede0bda3c963_phong_material);
+	scene.add(mesh);
+	});
+	shp8296f5734373467abc686a82da09b9fa_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8296f5734373467abc686a82da09b9fa.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8296f5734373467abc686a82da09b9fa_phong_material);
+	scene.add(mesh);
+	});
+	shp7e6029f950aa4b7990426a1b2f0860c8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7e6029f950aa4b7990426a1b2f0860c8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7e6029f950aa4b7990426a1b2f0860c8_phong_material);
+	scene.add(mesh);
+	});
+	shp489f193fbf1f4e9f87db2af94eb56f52_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp489f193fbf1f4e9f87db2af94eb56f52.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp489f193fbf1f4e9f87db2af94eb56f52_phong_material);
+	scene.add(mesh);
+	});
+	shpb5475a5a503842029cbbbc95c86c9716_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb5475a5a503842029cbbbc95c86c9716.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb5475a5a503842029cbbbc95c86c9716_phong_material);
+	scene.add(mesh);
+	});
+	shp741cb6c0d36141958da9b3785eac2a63_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp741cb6c0d36141958da9b3785eac2a63.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp741cb6c0d36141958da9b3785eac2a63_phong_material);
+	scene.add(mesh);
+	});
+	shp20f098f077b54a5290743ad5f6373e5a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp20f098f077b54a5290743ad5f6373e5a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp20f098f077b54a5290743ad5f6373e5a_phong_material);
+	scene.add(mesh);
+	});
+	shp241df3095f2c436ba950980107f60111_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp241df3095f2c436ba950980107f60111.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp241df3095f2c436ba950980107f60111_phong_material);
+	scene.add(mesh);
+	});
+	shp40c2b59c3439498088116c5a89138709_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp40c2b59c3439498088116c5a89138709.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp40c2b59c3439498088116c5a89138709_phong_material);
+	scene.add(mesh);
+	});
+	shpbcbe9a5893334b889be9c24fc0db46d6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbcbe9a5893334b889be9c24fc0db46d6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbcbe9a5893334b889be9c24fc0db46d6_phong_material);
+	scene.add(mesh);
+	});
+	shp51aefd29219347d1aacab74b1bb972d1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp51aefd29219347d1aacab74b1bb972d1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp51aefd29219347d1aacab74b1bb972d1_phong_material);
+	scene.add(mesh);
+	});
+	shp22af3ec418e04c3eabd71a14acb687a7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp22af3ec418e04c3eabd71a14acb687a7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp22af3ec418e04c3eabd71a14acb687a7_phong_material);
+	scene.add(mesh);
+	});
+	shpc716bdb088f54ff6a49e87c0e3407c02_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc716bdb088f54ff6a49e87c0e3407c02.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc716bdb088f54ff6a49e87c0e3407c02_phong_material);
+	scene.add(mesh);
+	});
+	shp47ce9d2d82e946d090468b0199db956d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp47ce9d2d82e946d090468b0199db956d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp47ce9d2d82e946d090468b0199db956d_phong_material);
+	scene.add(mesh);
+	});
+	shpbe8a640d4df144f898a17fbf6b159945_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbe8a640d4df144f898a17fbf6b159945.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbe8a640d4df144f898a17fbf6b159945_phong_material);
+	scene.add(mesh);
+	});
+	shp21bc3317af334ab7b325205f02e4928a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp21bc3317af334ab7b325205f02e4928a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp21bc3317af334ab7b325205f02e4928a_phong_material);
+	scene.add(mesh);
+	});
+	shp18134a2aa5d64adb9a54c0cfa36afb79_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp18134a2aa5d64adb9a54c0cfa36afb79.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp18134a2aa5d64adb9a54c0cfa36afb79_phong_material);
+	scene.add(mesh);
+	});
+	shp84d3feb4e04342829fb51513dfc352f1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp84d3feb4e04342829fb51513dfc352f1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp84d3feb4e04342829fb51513dfc352f1_phong_material);
+	scene.add(mesh);
+	});
+	shp2f818599e445494685c48f07caeb705b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2f818599e445494685c48f07caeb705b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2f818599e445494685c48f07caeb705b_phong_material);
+	scene.add(mesh);
+	});
+	shp29b8c441866e44868ecfe72c0173a4e7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp29b8c441866e44868ecfe72c0173a4e7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp29b8c441866e44868ecfe72c0173a4e7_phong_material);
+	scene.add(mesh);
+	});
+	shp15647e4f0648432ebb6f9b20488549c4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp15647e4f0648432ebb6f9b20488549c4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp15647e4f0648432ebb6f9b20488549c4_phong_material);
+	scene.add(mesh);
+	});
+	shp02af4113bdab4d97a23961eb51803258_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp02af4113bdab4d97a23961eb51803258.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp02af4113bdab4d97a23961eb51803258_phong_material);
+	scene.add(mesh);
+	});
+	shpdc1130d287c94297a46d21ea304f71c3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdc1130d287c94297a46d21ea304f71c3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdc1130d287c94297a46d21ea304f71c3_phong_material);
+	scene.add(mesh);
+	});
+	shp86f3010e7de8455e9c5ac202b1b342db_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp86f3010e7de8455e9c5ac202b1b342db.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp86f3010e7de8455e9c5ac202b1b342db_phong_material);
+	scene.add(mesh);
+	});
+	shpdd98e3bbf9e048fab331459b17dd65b9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdd98e3bbf9e048fab331459b17dd65b9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdd98e3bbf9e048fab331459b17dd65b9_phong_material);
+	scene.add(mesh);
+	});
+	shpc7004f13902244c3a00e21456bc5af7a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc7004f13902244c3a00e21456bc5af7a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc7004f13902244c3a00e21456bc5af7a_phong_material);
+	scene.add(mesh);
+	});
+	shp1b176684fa2d4202ae053a7d4624fae1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1b176684fa2d4202ae053a7d4624fae1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1b176684fa2d4202ae053a7d4624fae1_phong_material);
+	scene.add(mesh);
+	});
+	shpbc284c4582f84eeb9d8c1c4b77cc1671_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbc284c4582f84eeb9d8c1c4b77cc1671.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbc284c4582f84eeb9d8c1c4b77cc1671_phong_material);
+	scene.add(mesh);
+	});
+	shpc4afbeeb057f412b810c27229f71581d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc4afbeeb057f412b810c27229f71581d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc4afbeeb057f412b810c27229f71581d_phong_material);
+	scene.add(mesh);
+	});
+	shpb962f5c06a0042a1b5ed75aedcbce3ca_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb962f5c06a0042a1b5ed75aedcbce3ca.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb962f5c06a0042a1b5ed75aedcbce3ca_phong_material);
+	scene.add(mesh);
+	});
+	shpa6f6ada299cf4ee0b6d47e9370152fbd_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa6f6ada299cf4ee0b6d47e9370152fbd.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa6f6ada299cf4ee0b6d47e9370152fbd_phong_material);
+	scene.add(mesh);
+	});
+	shp5998148aa8874f0882ea8b78966278fe_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5998148aa8874f0882ea8b78966278fe.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5998148aa8874f0882ea8b78966278fe_phong_material);
+	scene.add(mesh);
+	});
+	shpb5edc30944244fff9300ad34ef3cf6e6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb5edc30944244fff9300ad34ef3cf6e6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb5edc30944244fff9300ad34ef3cf6e6_phong_material);
+	scene.add(mesh);
+	});
+	shpfcf04c9b7c834e3b9df25a14a5f6cc0d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpfcf04c9b7c834e3b9df25a14a5f6cc0d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpfcf04c9b7c834e3b9df25a14a5f6cc0d_phong_material);
+	scene.add(mesh);
+	});
+	shp21d4e0323be3419dae91d3fe8a2a2143_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp21d4e0323be3419dae91d3fe8a2a2143.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp21d4e0323be3419dae91d3fe8a2a2143_phong_material);
+	scene.add(mesh);
+	});
+	shpb2c8527d77c74048bfa508ddd1004b38_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb2c8527d77c74048bfa508ddd1004b38.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb2c8527d77c74048bfa508ddd1004b38_phong_material);
+	scene.add(mesh);
+	});
+	shp3915764770c4472599a0728a424efab0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3915764770c4472599a0728a424efab0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3915764770c4472599a0728a424efab0_phong_material);
+	scene.add(mesh);
+	});
+	shp5ed3635d7a7b43fba4ff951861188ad2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5ed3635d7a7b43fba4ff951861188ad2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5ed3635d7a7b43fba4ff951861188ad2_phong_material);
+	scene.add(mesh);
+	});
+	shp2223bc6dfe37438ebcf38d3fb93f77d6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2223bc6dfe37438ebcf38d3fb93f77d6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2223bc6dfe37438ebcf38d3fb93f77d6_phong_material);
+	scene.add(mesh);
+	});
+	shpa41d9e0a1be643c389cc0eb120ce2139_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa41d9e0a1be643c389cc0eb120ce2139.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa41d9e0a1be643c389cc0eb120ce2139_phong_material);
+	scene.add(mesh);
+	});
+	shpba9543279d2a4e399d5a9902771dde03_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpba9543279d2a4e399d5a9902771dde03.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpba9543279d2a4e399d5a9902771dde03_phong_material);
+	scene.add(mesh);
+	});
+	shp4049ff0a93ae4797881d15158fbf44e6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4049ff0a93ae4797881d15158fbf44e6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4049ff0a93ae4797881d15158fbf44e6_phong_material);
+	scene.add(mesh);
+	});
+	shp2441cf740e094a8cb9dbccc928def49b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2441cf740e094a8cb9dbccc928def49b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2441cf740e094a8cb9dbccc928def49b_phong_material);
+	scene.add(mesh);
+	});
+	shp36856e995aa24013ae404315075d846c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp36856e995aa24013ae404315075d846c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp36856e995aa24013ae404315075d846c_phong_material);
+	scene.add(mesh);
+	});
+	shpdc409b7fbc17480f97cab71607a38458_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdc409b7fbc17480f97cab71607a38458.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdc409b7fbc17480f97cab71607a38458_phong_material);
+	scene.add(mesh);
+	});
+	shp75a3807b334a40b4887759eed2f772ff_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp75a3807b334a40b4887759eed2f772ff.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp75a3807b334a40b4887759eed2f772ff_phong_material);
+	scene.add(mesh);
+	});
+	shp176e0705c61b4ef0ad6c80f4259faffd_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp176e0705c61b4ef0ad6c80f4259faffd.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp176e0705c61b4ef0ad6c80f4259faffd_phong_material);
+	scene.add(mesh);
+	});
+	shpe6fb29a29a2a4119b7e56f51f3fba400_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe6fb29a29a2a4119b7e56f51f3fba400.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe6fb29a29a2a4119b7e56f51f3fba400_phong_material);
+	scene.add(mesh);
+	});
+	shp84f3868eb8924c74b4080aed682ba495_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp84f3868eb8924c74b4080aed682ba495.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp84f3868eb8924c74b4080aed682ba495_phong_material);
+	scene.add(mesh);
+	});
+	shp5458511015e2474e8f4f85b4a0b49e1f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5458511015e2474e8f4f85b4a0b49e1f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5458511015e2474e8f4f85b4a0b49e1f_phong_material);
+	scene.add(mesh);
+	});
+	shpd8d0809127ea464890bbc014e510f1bb_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd8d0809127ea464890bbc014e510f1bb.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd8d0809127ea464890bbc014e510f1bb_phong_material);
+	scene.add(mesh);
+	});
+	shpc6c1d6a295c343bf8765a691dfcb997e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc6c1d6a295c343bf8765a691dfcb997e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc6c1d6a295c343bf8765a691dfcb997e_phong_material);
+	scene.add(mesh);
+	});
+	shp75f1e54ce9c741a9a7545f55a2a3c54c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp75f1e54ce9c741a9a7545f55a2a3c54c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp75f1e54ce9c741a9a7545f55a2a3c54c_phong_material);
+	scene.add(mesh);
+	});
+	shp3ebd3c85a7704de09d283b6013f2c082_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3ebd3c85a7704de09d283b6013f2c082.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3ebd3c85a7704de09d283b6013f2c082_phong_material);
+	scene.add(mesh);
+	});
+	shp5678e3f3df4143618fac2f197e2e6f20_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5678e3f3df4143618fac2f197e2e6f20.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5678e3f3df4143618fac2f197e2e6f20_phong_material);
+	scene.add(mesh);
+	});
+	shp55d770ce6b664986a12a0ad1aa2c38d7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp55d770ce6b664986a12a0ad1aa2c38d7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp55d770ce6b664986a12a0ad1aa2c38d7_phong_material);
+	scene.add(mesh);
+	});
+	shp1aebd5a4a8b840da8c860d91230b2f93_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1aebd5a4a8b840da8c860d91230b2f93.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1aebd5a4a8b840da8c860d91230b2f93_phong_material);
+	scene.add(mesh);
+	});
+	shp7620450f017a46a08c17b53b9ed0a553_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7620450f017a46a08c17b53b9ed0a553.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7620450f017a46a08c17b53b9ed0a553_phong_material);
+	scene.add(mesh);
+	});
+	shped63b78a0e7d4cb9a16ef0a8703d0202_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shped63b78a0e7d4cb9a16ef0a8703d0202.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shped63b78a0e7d4cb9a16ef0a8703d0202_phong_material);
+	scene.add(mesh);
+	});
+	shp7fdc1f811906434c9caafde06264effc_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7fdc1f811906434c9caafde06264effc.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7fdc1f811906434c9caafde06264effc_phong_material);
+	scene.add(mesh);
+	});
+	shp38bf52a0d05d49c8ba7aade67bb449d3_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp38bf52a0d05d49c8ba7aade67bb449d3.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp38bf52a0d05d49c8ba7aade67bb449d3_phong_material);
+	scene.add(mesh);
+	});
+	shpcac64bf0a3ca4ddc976d54abb98b44cd_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcac64bf0a3ca4ddc976d54abb98b44cd.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcac64bf0a3ca4ddc976d54abb98b44cd_phong_material);
+	scene.add(mesh);
+	});
+	shp537c85c3687540729473865ee4ba8163_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp537c85c3687540729473865ee4ba8163.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp537c85c3687540729473865ee4ba8163_phong_material);
+	scene.add(mesh);
+	});
+	shpcfd6e713e5e04a23bd589c57d79be45f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcfd6e713e5e04a23bd589c57d79be45f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcfd6e713e5e04a23bd589c57d79be45f_phong_material);
+	scene.add(mesh);
+	});
+	shpa0a9d6c6c1f0452fbd5619a80065acc1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa0a9d6c6c1f0452fbd5619a80065acc1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa0a9d6c6c1f0452fbd5619a80065acc1_phong_material);
+	scene.add(mesh);
+	});
+	shpd83bf593244c47d4aa86e710eef6e2ae_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd83bf593244c47d4aa86e710eef6e2ae.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd83bf593244c47d4aa86e710eef6e2ae_phong_material);
+	scene.add(mesh);
+	});
+	shpab8adacd8a9e4edfb120343c84a815b4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpab8adacd8a9e4edfb120343c84a815b4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpab8adacd8a9e4edfb120343c84a815b4_phong_material);
+	scene.add(mesh);
+	});
+	shpcd1c8399df87490d8783ea602b06dd34_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcd1c8399df87490d8783ea602b06dd34.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcd1c8399df87490d8783ea602b06dd34_phong_material);
+	scene.add(mesh);
+	});
+	shpfd9e3447120e4ec4877c70d43e654b8d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpfd9e3447120e4ec4877c70d43e654b8d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpfd9e3447120e4ec4877c70d43e654b8d_phong_material);
+	scene.add(mesh);
+	});
+	shp18984872aa754674a0929de2b1b2ecb8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp18984872aa754674a0929de2b1b2ecb8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp18984872aa754674a0929de2b1b2ecb8_phong_material);
+	scene.add(mesh);
+	});
+	shpaf18ffc2cad94858ab88ab49e0889b89_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpaf18ffc2cad94858ab88ab49e0889b89.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpaf18ffc2cad94858ab88ab49e0889b89_phong_material);
+	scene.add(mesh);
+	});
+	shp2ac119fd4b674e489c91d46480569f4e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2ac119fd4b674e489c91d46480569f4e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2ac119fd4b674e489c91d46480569f4e_phong_material);
+	scene.add(mesh);
+	});
+	shp16e36dddbf4e4a1081d4c57c4cf66f5e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp16e36dddbf4e4a1081d4c57c4cf66f5e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp16e36dddbf4e4a1081d4c57c4cf66f5e_phong_material);
+	scene.add(mesh);
+	});
+	shpae0c606a228f471bb56cd765bb4c970b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpae0c606a228f471bb56cd765bb4c970b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpae0c606a228f471bb56cd765bb4c970b_phong_material);
+	scene.add(mesh);
+	});
+	shpf3da9d13b9a04f54886e21958febb71e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf3da9d13b9a04f54886e21958febb71e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf3da9d13b9a04f54886e21958febb71e_phong_material);
+	scene.add(mesh);
+	});
+	shp1da36c71a51045a7944e3313f7af53b1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1da36c71a51045a7944e3313f7af53b1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1da36c71a51045a7944e3313f7af53b1_phong_material);
+	scene.add(mesh);
+	});
+	shp73e4d26f1b0a4e55a651cb623c11353d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp73e4d26f1b0a4e55a651cb623c11353d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp73e4d26f1b0a4e55a651cb623c11353d_phong_material);
+	scene.add(mesh);
+	});
+	shpda8a4237e6fa485abc3f93dc2f14476f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpda8a4237e6fa485abc3f93dc2f14476f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpda8a4237e6fa485abc3f93dc2f14476f_phong_material);
+	scene.add(mesh);
+	});
+	shpe1392a432ac24dd88c45f852270abf02_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe1392a432ac24dd88c45f852270abf02.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe1392a432ac24dd88c45f852270abf02_phong_material);
+	scene.add(mesh);
+	});
+	shp40e2e91d72974473bc530d477718d033_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp40e2e91d72974473bc530d477718d033.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp40e2e91d72974473bc530d477718d033_phong_material);
+	scene.add(mesh);
+	});
+	shpdfeeb41a4745495e9987f31bba1904ae_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpdfeeb41a4745495e9987f31bba1904ae.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpdfeeb41a4745495e9987f31bba1904ae_phong_material);
+	scene.add(mesh);
+	});
+	shpbe018d3330424e09bea0e00f053d3281_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpbe018d3330424e09bea0e00f053d3281.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpbe018d3330424e09bea0e00f053d3281_phong_material);
+	scene.add(mesh);
+	});
+	shp763e4b06ce844cbca57add3d5758cd9b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp763e4b06ce844cbca57add3d5758cd9b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp763e4b06ce844cbca57add3d5758cd9b_phong_material);
+	scene.add(mesh);
+	});
+	shp74361c92581b43e380119b01bf3ada49_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp74361c92581b43e380119b01bf3ada49.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp74361c92581b43e380119b01bf3ada49_phong_material);
+	scene.add(mesh);
+	});
+	shp937bfd5f2d5b4590a681ccc21a23a375_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp937bfd5f2d5b4590a681ccc21a23a375.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp937bfd5f2d5b4590a681ccc21a23a375_phong_material);
+	scene.add(mesh);
+	});
+	shp2662907b310e47b38591f379b815d9c7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp2662907b310e47b38591f379b815d9c7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp2662907b310e47b38591f379b815d9c7_phong_material);
+	scene.add(mesh);
+	});
+	shp14781271df16415cb47909d04d57cc75_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp14781271df16415cb47909d04d57cc75.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp14781271df16415cb47909d04d57cc75_phong_material);
+	scene.add(mesh);
+	});
+	shp7eb8dc55f4fc4bd5aee42c58670491ab_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7eb8dc55f4fc4bd5aee42c58670491ab.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7eb8dc55f4fc4bd5aee42c58670491ab_phong_material);
+	scene.add(mesh);
+	});
+	shp43af404d01c1490bb9d000c72ec05349_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp43af404d01c1490bb9d000c72ec05349.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp43af404d01c1490bb9d000c72ec05349_phong_material);
+	scene.add(mesh);
+	});
+	shp5b8114704b80499aaf6e7c5bd14061d2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5b8114704b80499aaf6e7c5bd14061d2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5b8114704b80499aaf6e7c5bd14061d2_phong_material);
+	scene.add(mesh);
+	});
+	shpcf73574cbab54293a77f5e8d4880f89d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpcf73574cbab54293a77f5e8d4880f89d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpcf73574cbab54293a77f5e8d4880f89d_phong_material);
+	scene.add(mesh);
+	});
+	shp8457f3d74a484acdb6d2fcb616378a9a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp8457f3d74a484acdb6d2fcb616378a9a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp8457f3d74a484acdb6d2fcb616378a9a_phong_material);
+	scene.add(mesh);
+	});
+	shpa8db4ae7ccdf489ba040b4165f7c13ce_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa8db4ae7ccdf489ba040b4165f7c13ce.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa8db4ae7ccdf489ba040b4165f7c13ce_phong_material);
+	scene.add(mesh);
+	});
+	shp9c63e757a8034209a5e36456e413b26a_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp9c63e757a8034209a5e36456e413b26a.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp9c63e757a8034209a5e36456e413b26a_phong_material);
+	scene.add(mesh);
+	});
+	shp63798eddf98a41cba73a0d2736c91069_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp63798eddf98a41cba73a0d2736c91069.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp63798eddf98a41cba73a0d2736c91069_phong_material);
+	scene.add(mesh);
+	});
+	shp4864454cc4764072a2e87d973499645b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4864454cc4764072a2e87d973499645b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4864454cc4764072a2e87d973499645b_phong_material);
+	scene.add(mesh);
+	});
+	shp82b30bdd4e8c4cfeba91a940444e98ec_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp82b30bdd4e8c4cfeba91a940444e98ec.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp82b30bdd4e8c4cfeba91a940444e98ec_phong_material);
+	scene.add(mesh);
+	});
+	shp3f2d2889e1d54cbb81b98e2cd197cc76_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3f2d2889e1d54cbb81b98e2cd197cc76.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3f2d2889e1d54cbb81b98e2cd197cc76_phong_material);
+	scene.add(mesh);
+	});
+	shp977a7b74b83e4d1abd100cc26a16a77f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp977a7b74b83e4d1abd100cc26a16a77f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp977a7b74b83e4d1abd100cc26a16a77f_phong_material);
+	scene.add(mesh);
+	});
+	shpc27ff966984d4777a8524cb20b2c46f0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc27ff966984d4777a8524cb20b2c46f0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc27ff966984d4777a8524cb20b2c46f0_phong_material);
+	scene.add(mesh);
+	});
+	shpa0917663ad30462ea92836b65fe1af5d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa0917663ad30462ea92836b65fe1af5d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa0917663ad30462ea92836b65fe1af5d_phong_material);
+	scene.add(mesh);
+	});
+	shpca65a30f7fb543009d11ba0bad8aafe5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpca65a30f7fb543009d11ba0bad8aafe5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpca65a30f7fb543009d11ba0bad8aafe5_phong_material);
+	scene.add(mesh);
+	});
+	shpf8d7af47afc6438a90c3d6f5ec8fa6c8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf8d7af47afc6438a90c3d6f5ec8fa6c8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf8d7af47afc6438a90c3d6f5ec8fa6c8_phong_material);
+	scene.add(mesh);
+	});
+	shp3a41bc6dda62457c8bfef99be94552ea_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3a41bc6dda62457c8bfef99be94552ea.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3a41bc6dda62457c8bfef99be94552ea_phong_material);
+	scene.add(mesh);
+	});
+	shp93157b9b31334fdda6d48d3fb173cf25_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp93157b9b31334fdda6d48d3fb173cf25.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp93157b9b31334fdda6d48d3fb173cf25_phong_material);
+	scene.add(mesh);
+	});
+	shp0a9cf209484e436f98238093fbbc144f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0a9cf209484e436f98238093fbbc144f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0a9cf209484e436f98238093fbbc144f_phong_material);
+	scene.add(mesh);
+	});
+	shp462b12c2b617421db52b0433f50aa976_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp462b12c2b617421db52b0433f50aa976.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp462b12c2b617421db52b0433f50aa976_phong_material);
+	scene.add(mesh);
+	});
+	shpb0b871c155304a14af6ce91179112825_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb0b871c155304a14af6ce91179112825.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb0b871c155304a14af6ce91179112825_phong_material);
+	scene.add(mesh);
+	});
+	shp65805114533846f3a36e5e19d19524ca_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp65805114533846f3a36e5e19d19524ca.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp65805114533846f3a36e5e19d19524ca_phong_material);
+	scene.add(mesh);
+	});
+	shp642e5d2d90754ceeabe0610b137bbbbd_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp642e5d2d90754ceeabe0610b137bbbbd.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp642e5d2d90754ceeabe0610b137bbbbd_phong_material);
+	scene.add(mesh);
+	});
+	shpa945a409c4484d228bb4f9ec44a0cc8e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa945a409c4484d228bb4f9ec44a0cc8e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa945a409c4484d228bb4f9ec44a0cc8e_phong_material);
+	scene.add(mesh);
+	});
+	shpca34ca1e994c41a2b0e98623b643a656_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpca34ca1e994c41a2b0e98623b643a656.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpca34ca1e994c41a2b0e98623b643a656_phong_material);
+	scene.add(mesh);
+	});
+	shp003b7a9aec5546aebebc005a6ed6cc38_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp003b7a9aec5546aebebc005a6ed6cc38.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp003b7a9aec5546aebebc005a6ed6cc38_phong_material);
+	scene.add(mesh);
+	});
+	shpc82bdceca01343fb836ae680014db2ea_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc82bdceca01343fb836ae680014db2ea.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc82bdceca01343fb836ae680014db2ea_phong_material);
+	scene.add(mesh);
+	});
+	shpae3bc27322d7439cbec605f3e2251303_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpae3bc27322d7439cbec605f3e2251303.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpae3bc27322d7439cbec605f3e2251303_phong_material);
+	scene.add(mesh);
+	});
+	shpa84dc64d7bae477ba759e9bd7ea77081_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpa84dc64d7bae477ba759e9bd7ea77081.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpa84dc64d7bae477ba759e9bd7ea77081_phong_material);
+	scene.add(mesh);
+	});
+	shp23b690904b2c4ac98082b210a9071c3e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp23b690904b2c4ac98082b210a9071c3e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp23b690904b2c4ac98082b210a9071c3e_phong_material);
+	scene.add(mesh);
+	});
+	shpf1515b623f284257ac64a83d0d5af5d5_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf1515b623f284257ac64a83d0d5af5d5.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf1515b623f284257ac64a83d0d5af5d5_phong_material);
+	scene.add(mesh);
+	});
+	shp7b1de57bc7f64b53942a5613d86bac6c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7b1de57bc7f64b53942a5613d86bac6c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7b1de57bc7f64b53942a5613d86bac6c_phong_material);
+	scene.add(mesh);
+	});
+	shpf68d63a8a2794de5aaafdc56c448d99f_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf68d63a8a2794de5aaafdc56c448d99f.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf68d63a8a2794de5aaafdc56c448d99f_phong_material);
+	scene.add(mesh);
+	});
+	shp80eb970ee4e64ebc963998e7fd904edf_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp80eb970ee4e64ebc963998e7fd904edf.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp80eb970ee4e64ebc963998e7fd904edf_phong_material);
+	scene.add(mesh);
+	});
+	shp0dd95862de6e4b21a78fb75a2d928057_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp0dd95862de6e4b21a78fb75a2d928057.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp0dd95862de6e4b21a78fb75a2d928057_phong_material);
+	scene.add(mesh);
+	});
+	shpf914ea90b6164acfb632afa326a53f1b_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf914ea90b6164acfb632afa326a53f1b.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf914ea90b6164acfb632afa326a53f1b_phong_material);
+	scene.add(mesh);
+	});
+	shp88e1fc75715940a59aac5b52bd6432f6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp88e1fc75715940a59aac5b52bd6432f6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp88e1fc75715940a59aac5b52bd6432f6_phong_material);
+	scene.add(mesh);
+	});
+	shp6b105d69bded43a896234bbecc1f29f2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp6b105d69bded43a896234bbecc1f29f2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp6b105d69bded43a896234bbecc1f29f2_phong_material);
+	scene.add(mesh);
+	});
+	shp29dcec91c3394c808a2535cbd797b9d2_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp29dcec91c3394c808a2535cbd797b9d2.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp29dcec91c3394c808a2535cbd797b9d2_phong_material);
+	scene.add(mesh);
+	});
+	shpd2be1aec13444c989b964de89f6e6020_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd2be1aec13444c989b964de89f6e6020.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd2be1aec13444c989b964de89f6e6020_phong_material);
+	scene.add(mesh);
+	});
+	shp632fcba8afbb49e781021d0322b67ad7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp632fcba8afbb49e781021d0322b67ad7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp632fcba8afbb49e781021d0322b67ad7_phong_material);
+	scene.add(mesh);
+	});
+	shp3368a6b5a7c34c96a6e6b59a188f5583_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3368a6b5a7c34c96a6e6b59a188f5583.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3368a6b5a7c34c96a6e6b59a188f5583_phong_material);
+	scene.add(mesh);
+	});
+	shpd233b9160de646daaec305c9a8357099_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpd233b9160de646daaec305c9a8357099.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpd233b9160de646daaec305c9a8357099_phong_material);
+	scene.add(mesh);
+	});
+	shp04ae8a3401304e02be38ccbfa1028ca4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp04ae8a3401304e02be38ccbfa1028ca4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp04ae8a3401304e02be38ccbfa1028ca4_phong_material);
+	scene.add(mesh);
+	});
+	shp4756772c39d940b587a90a5a5f528af4_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp4756772c39d940b587a90a5a5f528af4.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp4756772c39d940b587a90a5a5f528af4_phong_material);
+	scene.add(mesh);
+	});
+	shpf6ace10736154fd1affde040326aafe7_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf6ace10736154fd1affde040326aafe7.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf6ace10736154fd1affde040326aafe7_phong_material);
+	scene.add(mesh);
+	});
+	shp37bb0fa0483c4a4eb7094ff9c1a4fc21_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp37bb0fa0483c4a4eb7094ff9c1a4fc21.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp37bb0fa0483c4a4eb7094ff9c1a4fc21_phong_material);
+	scene.add(mesh);
+	});
+	shp62519d0468ec4df8a9df71bd37a9eca1_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp62519d0468ec4df8a9df71bd37a9eca1.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp62519d0468ec4df8a9df71bd37a9eca1_phong_material);
+	scene.add(mesh);
+	});
+	shpe4d3d0366fad4503ae3f7b5a38fbfc2d_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpe4d3d0366fad4503ae3f7b5a38fbfc2d.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpe4d3d0366fad4503ae3f7b5a38fbfc2d_phong_material);
+	scene.add(mesh);
+	});
+	shpc35e2cf03edc4769ad35b03535438e4e_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpc35e2cf03edc4769ad35b03535438e4e.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpc35e2cf03edc4769ad35b03535438e4e_phong_material);
+	scene.add(mesh);
+	});
+	shpb8037759e5fa4bfaaf3983cf6ac7e4f6_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb8037759e5fa4bfaaf3983cf6ac7e4f6.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb8037759e5fa4bfaaf3983cf6ac7e4f6_phong_material);
+	scene.add(mesh);
+	});
+	shp5158e6f52f9e481d91bc911b0f35fc98_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5158e6f52f9e481d91bc911b0f35fc98.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5158e6f52f9e481d91bc911b0f35fc98_phong_material);
+	scene.add(mesh);
+	});
+	shp49d0ce1955fc4d75bf31ae7835a8fa76_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp49d0ce1955fc4d75bf31ae7835a8fa76.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp49d0ce1955fc4d75bf31ae7835a8fa76_phong_material);
+	scene.add(mesh);
+	});
+	shp98c3c90d1cf8477e98aca0ae3f39ffbe_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp98c3c90d1cf8477e98aca0ae3f39ffbe.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp98c3c90d1cf8477e98aca0ae3f39ffbe_phong_material);
+	scene.add(mesh);
+	});
+	shpf4492a640cde4d08b71d9ea7ca8f7f45_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpf4492a640cde4d08b71d9ea7ca8f7f45.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpf4492a640cde4d08b71d9ea7ca8f7f45_phong_material);
+	scene.add(mesh);
+	});
+	shp3fcfc0eddb074457943a00ef10f0ebfc_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp3fcfc0eddb074457943a00ef10f0ebfc.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp3fcfc0eddb074457943a00ef10f0ebfc_phong_material);
+	scene.add(mesh);
+	});
+	shp660bc91e127b4cd8bf5c43e94ec1d8e8_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp660bc91e127b4cd8bf5c43e94ec1d8e8.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp660bc91e127b4cd8bf5c43e94ec1d8e8_phong_material);
+	scene.add(mesh);
+	});
+	shpec6bb2f5d6284b99aafb6ae9580f5373_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpec6bb2f5d6284b99aafb6ae9580f5373.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpec6bb2f5d6284b99aafb6ae9580f5373_phong_material);
+	scene.add(mesh);
+	});
+	shp5d25bcc646e24bec8d1c94e77f756c2c_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp5d25bcc646e24bec8d1c94e77f756c2c.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp5d25bcc646e24bec8d1c94e77f756c2c_phong_material);
+	scene.add(mesh);
+	});
+	shpb718fd77909540f9aa2fee466bdacec9_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shpb718fd77909540f9aa2fee466bdacec9.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shpb718fd77909540f9aa2fee466bdacec9_phong_material);
+	scene.add(mesh);
+	});
+	shp1779721b99f44437b01357490f73cf66_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp1779721b99f44437b01357490f73cf66.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp1779721b99f44437b01357490f73cf66_phong_material);
+	scene.add(mesh);
+	});
+	shp7379fd73f5d947e8bbbd4d525a1b3115_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp7379fd73f5d947e8bbbd4d525a1b3115.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp7379fd73f5d947e8bbbd4d525a1b3115_phong_material);
+	scene.add(mesh);
+	});
+	shp78570c49ad0a4060bf4c32f3a6b1deb0_phong_material = new THREE.MeshPhongMaterial({color:0xa5a5a5,specular:0xffffff,shininess:0.9,});
+	loader.load('shp78570c49ad0a4060bf4c32f3a6b1deb0.json', function(geometry) {
+	mesh = new THREE.Mesh(geometry, shp78570c49ad0a4060bf4c32f3a6b1deb0_phong_material);
+	scene.add(mesh);
+	fit_to_scene();});
+
+            renderer = new THREE.WebGLRenderer({antialias:true, alpha: true});
+            renderer.setSize( window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+            // for shadow rendering
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFShadowMap;
+            // show stats, is it really useful ?
+            stats = new Stats();
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.top = '0px';
+            container.appendChild(stats.domElement);
+            // add events
+            document.addEventListener('click', onDocumentMouseClick, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            render();
+            stats.update();
+        }
+        function update_lights() {
+            if (directionalLight != undefined) {
+                directionalLight.position.copy(camera.position);
+            }
+        }
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        function onDocumentMouseClick(event) {
+            event.preventDefault();
+            mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+            mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+            // restore previous selected target color
+            if (selected_target) {
+                selected_target.material.color.setRGB(selected_target_color_r,
+                    selected_target_color_g,
+                    selected_target_color_b);
+            }
+            // performe selection
+            raycaster.setFromCamera(mouse, camera);
+            var intersects = raycaster.intersectObjects(scene.children);
+            if (intersects.length > 0) {
+                var target = intersects[0].object;
+                selected_target_color_r = target.material.color.r;
+                selected_target_color_g = target.material.color.g;
+                selected_target_color_b = target.material.color.b;
+                target.material.color.setRGB(1., 0.65, 0.);
+                console.log(target);
+                selected_target = target;
+            }
+        }
+        function fit_to_scene() {
+            // compute bounding sphere of whole scene
+            var center = new THREE.Vector3(0,0,0);
+            var radiuses = new Array();
+            var positions = new Array();
+            // compute center of all objects
+            scene.traverse(function(child) {
+                if (child instanceof THREE.Mesh) {
+                    child.geometry.computeBoundingBox();
+                    var box = child.geometry.boundingBox;
+                    var curCenter = new THREE.Vector3().copy(box.min).add(box.max).multiplyScalar(0.5);
+                    var radius = new THREE.Vector3().copy(box.max).distanceTo(box.min)/2.;
+                    center.add(curCenter);
+                    positions.push(curCenter);
+                    radiuses.push(radius);
+                }
+            });
+            if (radiuses.length > 0) {
+                center.divideScalar(radiuses.length);
+            }
+            var maxRad = 1.;
+            // compute bounding radius
+            for (var ichild = 0; ichild < radiuses.length; ++ichild) {
+                var distToCenter = positions[ichild].distanceTo(center);
+                var totalDist = distToCenter + radiuses[ichild];
+                if (totalDist > maxRad) {
+                    maxRad = totalDist;
+                }
+            }
+            camera.lookAt(center);
+            var direction = new THREE.Vector3().copy(camera.position).sub(controls.target);
+            var len = direction.length();
+            direction.normalize();
+            
+            // compute new distance of camera to middle of scene to fit the object to screen
+            var lnew = maxRad / Math.sin(camera.fov/180. * Math.PI / 2.);
+            direction.multiplyScalar(lnew);
+            
+            var pnew = new THREE.Vector3().copy(center).add(direction);
+            // change near far values to avoid culling of objects 
+            camera.position.set(pnew.x, pnew.y, pnew.z);
+            camera.far = lnew*50;
+            camera.near = lnew*50*0.001;
+            camera.updateProjectionMatrix();
+            controls.target = center;
+            controls.update();
+        }
+        function render() {
+            //@IncrementTime@  TODO UNCOMMENT
+            update_lights();
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

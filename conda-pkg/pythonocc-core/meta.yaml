@@ -11,8 +11,12 @@ source:
       - fix_graphicshr_location.patch
 
 build:
-  number: 1
+  number: 2
   binary_relocation: true
+  features:
+    - vc9               [win and py27]
+    - vc10              [win and py34]
+    - vc14              [win and py35]
 
 requirements:
   build:

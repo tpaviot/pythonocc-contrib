@@ -1,0 +1,72 @@
+language:
+  - cpp
+
+sudo: true
+
+compiler:
+  # - gcc
+  - clang
+
+before_install:
+  - sudo apt-get update
+
+  # seriously, which resolves not finding OpenGL
+
+  - sudo apt-get install libx11-dev
+  - sudo apt-get install freeglut3-dev
+  - sudo apt-get install mesa-common-dev mesa-utils-extra libgl1-mesa-dev libglapi-mesa
+
+#  - sudo apt-get install tcl8.5-dev tk8.5-dev
+  # headless opengl rendering
+#  - sudo apt-get libosmesa6-dev
+
+  # make sure we've got opengl
+#  - sudo apt-get install python-qt4 python-qt4-gl libgl2ps-dev libfreeimage-dev
+
+install:
+
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+
+
+  - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+#  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+#      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+#    else
+#      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+#    fi
+
+
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - conda install conda-build
+  # DLR's conda dependency channel
+  - conda config --add channels dlr-sc
+  # BUILD OCE
+  - cd conda-pkg/OCE/OCE-016
+  # invoking a conda build also invokes a test testing the validity of the build
+  # hence, if the build completes, the testing of the build has passed too...
+  - conda build .
+  - conda install opencascade_community_edition --use-local
+
+  # stuck at:
+  #  Could NOT find OpenGL (missing: OPENGL_gl_LIBRARY)
+
+#  - conda create -q -n test-environment python=2.7
+#  - source activate test-environment
+#
+#
+#  # BUILD PYTHONOCC-CORE
+#  - cd ../../pythonocc-core
+#  - conda build .
+
+  # bzzz  dfsdfsd
+
+
+script:
+  # Your test script goes here
